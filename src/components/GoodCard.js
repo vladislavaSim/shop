@@ -1,26 +1,27 @@
 import React from 'react';
 import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {backendUrl} from "../graphQL/url";
+import noImage from "../images/no-image-icon-23483.png"
 
 const GoodCard = ({name, price, description, images, _id}) => {
     console.log(name)
     return (
         <>
-            {_id && name && <Card sx={{width: '200px'}} className='card'>
-                {images?.[0]?.url && <CardMedia
+            {_id && name && <Card sx={{width: '220px'}} className='card'>
+                {<CardMedia
                     component="img"
                     alt="good image"
                     height="140"
-                    image={backendUrl + images?.[0]?.url}
+                    image={images?.[0]?.url ? backendUrl + images?.[0]?.url : noImage}
                 />}
-                <CardContent>
-                    { name && <Typography gutterBottom variant="h5" component="div">
-                        {name}
+                <CardContent style={{paddingBottom: '0'}}>
+                    { name && <Typography gutterBottom variant="h6" component="div">
+                        {name.slice(0, 30) + '...'}
                     </Typography>}
                     { description && <Typography variant="body2" color="text.secondary">
-                        {description}
+                        {description.slice(0, 70) + '...'}
                     </Typography>}
-                    { price && <Typography gutterBottom variant="h6" component="div">
+                    { price && <Typography gutterBottom variant="h7" component="div">
                         {price + ' UAH'}
                     </Typography>}
                 </CardContent>
