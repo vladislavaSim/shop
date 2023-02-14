@@ -32,36 +32,38 @@ const AllGoods = ({getAll, allGoods}) => {
 
     useEffect(() => {
         setGoods(allGoods)
-        console.log(goods)
+        // console.log(goods)
     }, [allGoods])
 
-    // console.log(store?.getState())
     return (
-       <>
-           <FormControl fullWidth style={{width: '300px'}}>
-               <InputLabel id="demo-simple-select-label">Sort</InputLabel>
-               <Select
-                   labelId="demo-simple-select-label"
-                   id="demo-simple-select"
-                   value={sortedBy}
-                   label="sort"
-                   onChange={(e) => sortGoods(e.target.value)}
-               >
-                   <MenuItem value={'old'}>From oldest</MenuItem>
-                   <MenuItem value={'new'}>From newest</MenuItem>
-                   <MenuItem value={'low'}>By low price</MenuItem>
-                   <MenuItem value={'high'}>By high price</MenuItem>
-               </Select>
-           </FormControl>
-
-           <div className='card-holder'>
-               {goods &&
-               goods.map(({_id, name, price, description, images, createdAt}) => {
-                   return <GoodCard key={_id} name={name} images={images} price={price} description={description} _id={_id} createdAt={createdAt}/>
-               })
-               }
+       <div>
+           <div className='select-box'>
+               <FormControl fullWidth style={{width: '300px'}}>
+                   <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+                   <Select
+                       labelId="demo-simple-select-label"
+                       id="demo-simple-select"
+                       value={sortedBy}
+                       label="sort"
+                       onChange={(e) => sortGoods(e.target.value)}
+                   >
+                       <MenuItem value={'old'}>From oldest</MenuItem>
+                       <MenuItem value={'new'}>From newest</MenuItem>
+                       <MenuItem value={'low'}>By low price</MenuItem>
+                       <MenuItem value={'high'}>By high price</MenuItem>
+                   </Select>
+               </FormControl>
            </div>
-       </>
+           <div>
+               <div className='card-holder'>
+                   {goods &&
+                   goods.map(({_id, name, price, description, images, createdAt}) => {
+                       return <GoodCard key={_id} name={name} images={images} price={price} description={description} _id={_id} createdAt={createdAt}/>
+                   })
+                   }
+               </div>
+           </div>
+       </div>
     );
 };
 
