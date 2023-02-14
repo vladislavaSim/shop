@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {connect, useDispatch} from "react-redux";
 import {queryAllGoods} from "../graphQL/getGoodsQuery";
 import {store} from "../redux/store";
+import GoodCard from "../components/GoodCard";
 
 const AllGoods = ({getAll, allGoods}) => {
     const [goods, setGoods] = useState(null)
@@ -13,14 +14,15 @@ const AllGoods = ({getAll, allGoods}) => {
 
     useEffect(() => {
         setGoods(allGoods)
+        console.log(goods)
     }, [allGoods])
 
-
+    // console.log(store?.getState())
     return (
-        <div>
+        <div className='card-holder'>
             {goods &&
-                goods.map((good) => {
-                    return <div key={good?._id}>{good?.name}</div>
+                goods.map(({_id, name, price, description, images}) => {
+                    return <GoodCard key={_id} name={name} images={images} price={price} description={description} _id={_id}/>
                 })
             }
         </div>

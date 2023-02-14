@@ -4,16 +4,13 @@ import {gql} from "./getgql";
 
 export const queryAllGoods = () => {
     return actionPromise('allGoods',
-        gql(`query cats{
-                CategoryFind(query: "[{}]"){
-                   _id, name, image {
-                       _id
-                        createdAt
-                        text
-                        url
-                        originalFileName
-                    }
-                }
-            }`)
-        )
+        gql(`query allGoods{
+          GoodFind(query: "[{}]") {
+            _id, name, price, description, images {
+              _id
+              url
+            }
+          }
+        }`)
+      )
 }

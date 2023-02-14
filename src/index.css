@@ -26,3 +26,12 @@ main {
     margin: 0 auto;
     height: 80vh;
 }
+.card-holder {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.card {
+    margin-bottom: 10px;
+}
