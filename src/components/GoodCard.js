@@ -7,7 +7,7 @@ const GoodCard = ({name, price, description, images, _id}) => {
     console.log(name)
     return (
         <>
-            {_id && name && <Card sx={{width: '220px'}} className='card'>
+            {_id && name && price && <Card sx={{width: '220px'}} className='card'>
                 {<CardMedia
                     component="img"
                     alt="good image"
