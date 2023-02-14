@@ -5,34 +5,35 @@ import {store} from "../redux/store";
 import GoodCard from "../components/GoodCard";
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
-const AllGoods = ({getAll, allGoods}) => {
+const AllGoods = ({getAll, allGoods, goodsByCat}) => {
     const [goods, setGoods] = useState(null)
     const [sortedBy, setSortedBy] = useState('old')
 
     const dispatch = useDispatch()
 
+//initial dispatch to get all goods
+    useEffect(() => {
+        dispatch(() => getAll())
+    }, [])
+
     function sortGoods(value) {
-        console.log(value)
         setSortedBy(value)
-        console.log(sortedBy)
         if(value === 'low' || value === 'high') {
-            console.log('by price')
             setGoods(goods.sort((a, b) => value === 'low' ? a.price - b.price : b.price - a.price))
         } else if(value === 'old' || value === 'new') {
-            console.log('by time')
             setGoods(goods.sort((a, b) => value === 'old' ? a.createdAt - b.createdAt : b.createdAt - a.createdAt))
         } else {
             return null
         }
     }
-
+//goods state update while choosing cats from sidemenu
     useEffect(() => {
-        dispatch(() => getAll())
-    }, [])
+       setGoods(goodsByCat)
+    }, [goodsByCat])
 
+//initial all goods show
     useEffect(() => {
         setGoods(allGoods)
-        // console.log(goods)
     }, [allGoods])
 
     return (
@@ -68,7 +69,8 @@ const AllGoods = ({getAll, allGoods}) => {
 };
 
 export const CAllGoods = connect((state) => ({
-    allGoods: state?.promise?.allGoods?.payload
+    allGoods: state?.promise?.allGoods?.payload,
+    goodsByCat: state?.promise?.goodsByCat?.payload?.goods
 }),
     {getAll: queryAllGoods})
 (AllGoods)

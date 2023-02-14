@@ -12,3 +12,17 @@ export const getCatsQuery = () => {
             }`)
         )
 }
+export const getGoodsByCat = (name) => {
+    return actionPromise('goodsByCat',
+        gql(`query GoodsByCat($name: String){
+              CategoryFindOne(query: $name) {
+                name goods{
+                  _id, name, price, createdAt, description, images {
+              _id
+              url
+            }
+                }
+              }
+            }`, {name: JSON.stringify([{name: `/${name}/`}])})
+    )
+}
