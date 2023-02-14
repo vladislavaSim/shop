@@ -6,7 +6,7 @@ export const queryAllGoods = () => {
     return actionPromise('allGoods',
         gql(`query allGoods{
           GoodFind(query: "[{}]") {
-            _id, name, price, description, images {
+            _id, name, price, createdAt, description, images {
               _id
               url
             }

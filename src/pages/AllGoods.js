@@ -7,14 +7,23 @@ import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
 const AllGoods = ({getAll, allGoods}) => {
     const [goods, setGoods] = useState(null)
-    const [sortedBy, setSortedBy] = useState('low')
+    const [sortedBy, setSortedBy] = useState('old')
 
     const dispatch = useDispatch()
 
     function sortGoods(value) {
         console.log(value)
         setSortedBy(value)
-        setGoods(goods.sort((a, b) => value === 'low' ? a.price - b.price : b.price - a.price))
+        console.log(sortedBy)
+        if(value === 'low' || value === 'high') {
+            console.log('by price')
+            setGoods(goods.sort((a, b) => value === 'low' ? a.price - b.price : b.price - a.price))
+        } else if(value === 'old' || value === 'new') {
+            console.log('by time')
+            setGoods(goods.sort((a, b) => value === 'old' ? a.createdAt - b.createdAt : b.createdAt - a.createdAt))
+        } else {
+            return null
+        }
     }
 
     useEffect(() => {
@@ -38,15 +47,17 @@ const AllGoods = ({getAll, allGoods}) => {
                    label="sort"
                    onChange={(e) => sortGoods(e.target.value)}
                >
+                   <MenuItem value={'old'}>From oldest</MenuItem>
+                   <MenuItem value={'new'}>From newest</MenuItem>
                    <MenuItem value={'low'}>By low price</MenuItem>
-                   <MenuItem value={'high price'}>By high price</MenuItem>
+                   <MenuItem value={'high'}>By high price</MenuItem>
                </Select>
            </FormControl>
 
            <div className='card-holder'>
                {goods &&
-               goods.map(({_id, name, price, description, images}) => {
-                   return <GoodCard key={_id} name={name} images={images} price={price} description={description} _id={_id}/>
+               goods.map(({_id, name, price, description, images, createdAt}) => {
+                   return <GoodCard key={_id} name={name} images={images} price={price} description={description} _id={_id} createdAt={createdAt}/>
                })
                }
            </div>

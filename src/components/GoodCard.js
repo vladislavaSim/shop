@@ -3,8 +3,8 @@ import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mu
 import {backendUrl} from "../graphQL/url";
 import noImage from "../images/no-image-icon-23483.png"
 
-const GoodCard = ({name, price, description, images, _id}) => {
-    console.log(name)
+const GoodCard = ({name, price, description, images, _id, createdAt}) => {
+    // console.log(createdAt)
     return (
         <>
             {_id && name && price && <Card sx={{width: '220px'}} className='card'>
