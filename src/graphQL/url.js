@@ -1,0 +1,1 @@
+export const backendUrl = 'http://shop-roles.node.ed.asmer.org.ua/'
