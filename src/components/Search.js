@@ -13,10 +13,13 @@ const useDebounce = (cb, depArray, delay) => {
 };
 
 
-const Search = ({onGetGoods}) => {
+const Search = ({onGetGoods, goodsByName}) => {
     const [name, setName] = useState('')
 
     useDebounce( () => onGetGoods(name), [name], 2000);
+    useEffect(() => {
+        setName('')
+    }, [goodsByName])
     return (
         <div>
             <TextField
@@ -28,7 +31,7 @@ const Search = ({onGetGoods}) => {
 };
 
 export const CSearch = connect((state) => ({
-    promise: state?.promise
+    goodsByName: state?.promise?.goodsByName?.payload
 }), {
     onGetGoods: queryGoodsByName
 })(Search);

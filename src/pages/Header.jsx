@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../images/logot.png'
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 const Header = () => {
     return (
@@ -7,7 +8,6 @@ const Header = () => {
             <div>
                 <img src={logo} alt="logo" className={'logo'}/>
             </div>
-
             {/*<nav>*/}
             {/*        <p>goods*/}
             {/*            <p>toys</p>*/}

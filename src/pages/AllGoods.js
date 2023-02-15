@@ -3,7 +3,7 @@ import {connect, useDispatch} from "react-redux";
 import {queryAllGoods} from "../graphQL/getGoodsQuery";
 import {store} from "../redux/store";
 import GoodCard from "../components/GoodCard";
-import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import Search, {CSearch} from "../components/Search";
 import Goods from "./Goods";
 
@@ -43,7 +43,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
         console.log(goods)
         console.log(goodsByName)
     }, [goodsByName])
-    console.log(goodsByName)
+
     return (
        <div>
            <div className='inputs-box'>
@@ -63,6 +63,11 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
                    </Select>
                </FormControl>
                <CSearch/>
+
+               <Button onClick={() => setGoods(allGoods)}
+                       color="error"
+                       size={'small'}
+                       variant="outlined">Reset filters</Button>
                {/*<TextField id="outlined-basic" label="Search goods" variant="outlined" />*/}
            </div>
            <div>
