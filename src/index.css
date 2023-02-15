@@ -53,11 +53,13 @@ main {
     margin-bottom: 10px;
     margin-right: 5px;
 }
-.select-box {
+.inputs-box {
     padding: 20px 0 5px;
     position: sticky;
     top: -1px;
     background-color: white;
     z-index: 10;
+    display: flex;
+    justify-content: space-around;
 }
 

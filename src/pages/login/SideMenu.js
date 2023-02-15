@@ -4,10 +4,12 @@ import {getCatsQuery, getGoodsByCat} from "../../graphQL/getCats";
 
 const SideMenu = ({categories, getCats, getGoodsByCat, promise}) => {
     const dispatch = useDispatch()
+
+    //initial getting all categories
     useEffect(() => {
         dispatch(() => getCats())
     }, [])
-    console.log(promise)
+    // console.log(promise)
     return (
         <aside className='side-menu'>
             <ul>

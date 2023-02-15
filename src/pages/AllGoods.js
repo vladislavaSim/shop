@@ -3,9 +3,11 @@ import {connect, useDispatch} from "react-redux";
 import {queryAllGoods} from "../graphQL/getGoodsQuery";
 import {store} from "../redux/store";
 import GoodCard from "../components/GoodCard";
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import Search, {CSearch} from "../components/Search";
+import Goods from "./Goods";
 
-const AllGoods = ({getAll, allGoods, goodsByCat}) => {
+const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
     const [goods, setGoods] = useState(null)
     const [sortedBy, setSortedBy] = useState('old')
 
@@ -36,9 +38,15 @@ const AllGoods = ({getAll, allGoods, goodsByCat}) => {
         setGoods(allGoods)
     }, [allGoods])
 
+    useEffect(() => {
+        setGoods(goodsByName)
+        console.log(goods)
+        console.log(goodsByName)
+    }, [goodsByName])
+    console.log(goodsByName)
     return (
        <div>
-           <div className='select-box'>
+           <div className='inputs-box'>
                <FormControl fullWidth style={{width: '300px'}}>
                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>
                    <Select
@@ -54,15 +62,11 @@ const AllGoods = ({getAll, allGoods, goodsByCat}) => {
                        <MenuItem value={'high'}>By high price</MenuItem>
                    </Select>
                </FormControl>
+               <CSearch/>
+               {/*<TextField id="outlined-basic" label="Search goods" variant="outlined" />*/}
            </div>
            <div>
-               <div className='card-holder'>
-                   {goods &&
-                   goods.map(({_id, name, price, description, images, createdAt}) => {
-                       return <GoodCard key={_id} name={name} images={images} price={price} description={description} _id={_id} createdAt={createdAt}/>
-                   })
-                   }
-               </div>
+               {goods && <Goods goods={goods}/>}
            </div>
        </div>
     );
@@ -70,7 +74,8 @@ const AllGoods = ({getAll, allGoods, goodsByCat}) => {
 
 export const CAllGoods = connect((state) => ({
     allGoods: state?.promise?.allGoods?.payload,
-    goodsByCat: state?.promise?.goodsByCat?.payload?.goods
+    goodsByCat: state?.promise?.goodsByCat?.payload?.goods,
+    goodsByName: state?.promise?.goodsByName?.payload
 }),
     {getAll: queryAllGoods})
 (AllGoods)
