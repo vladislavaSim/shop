@@ -1,6 +1,18 @@
 import React from 'react';
 import logo from '../images/logot.png'
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import {Button, IconButton} from "@mui/material";
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 
 const Header = () => {
     return (
@@ -8,16 +20,18 @@ const Header = () => {
             <div>
                 <img src={logo} alt="logo" className={'logo'}/>
             </div>
-            {/*<nav>*/}
-            {/*        <p>goods*/}
-            {/*            <p>toys</p>*/}
-            {/*               <p>food</p>*/}
-            {/*               <p>sport</p>*/}
-            {/*        </p>*/}
-            {/*        <p>contacts</p>*/}
-            {/*        <p>something</p>*/}
-            {/*        <p>else</p>*/}
-            {/*</nav>*/}
+
+            <div>
+                <IconButton aria-label="cart">
+                    <StyledBadge badgeContent={4} color="error">
+                        <ShoppingCartIcon />
+                    </StyledBadge>
+                </IconButton>
+            </div>
+           <div>
+               <Button>Log in</Button>
+               <Button>Sign up</Button>
+           </div>
         </header>
     );
 };

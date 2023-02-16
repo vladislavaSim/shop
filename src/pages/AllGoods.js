@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {connect, useDispatch} from "react-redux";
 import {queryAllGoods} from "../graphQL/getGoodsQuery";
-import {store} from "../redux/store";
-import GoodCard from "../components/GoodCard";
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
-import Search, {CSearch} from "../components/Search";
+import {Button, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {CSearch} from "../components/Search";
 import Goods from "./Goods";
+import {CLogin} from "./login/Login";
 
 const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
     const [goods, setGoods] = useState(null)
@@ -46,6 +45,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
 
     return (
        <div>
+           <CLogin/>
            <div className='inputs-box'>
                <FormControl fullWidth style={{width: '300px'}}>
                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>
