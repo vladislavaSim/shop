@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {useState} from "react";
 import {CLoginForm} from "../pages/login/Login";
-import Registration from "../pages/login/Registration";
+import {CRegistrationForm} from "../pages/login/Registration";
 
 const style = {
     position: 'absolute',
@@ -39,7 +39,7 @@ export const ModalWindow = ({authType}) => {
                 <Box sx={style}>
                     {authType === 'log in' ?
                         <CLoginForm handleClose={handleClose}/>
-                    : <Registration handleClose={handleClose}/>
+                    : <CRegistrationForm handleClose={handleClose}/>
                     }
                 </Box>
             </Modal>
