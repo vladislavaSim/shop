@@ -45,7 +45,6 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
 
     return (
        <div>
-           <CLogin/>
            <div className='inputs-box'>
                <FormControl fullWidth style={{width: '300px'}}>
                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>

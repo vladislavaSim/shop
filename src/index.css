@@ -13,14 +13,24 @@ header, footer{
     color: yellow;
     background-color: #282c34;
 }
-header, nav {
+header {
     display: flex;
-}
-nav p {
-    margin-right: 15px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 25px;
 }
 .logo {
     width: 50px;
+    margin-right: 25px;
+}
+.auth-buttons-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+.header-box {
+    display: flex;
+    align-items: center;
 }
 main {
     /*width: 80%;*/
