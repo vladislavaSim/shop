@@ -3,8 +3,9 @@ import {connect} from "react-redux";
 import {CCartItem} from "./CartItem";
 import {CGoodCard} from "../../components/GoodCard";
 import Button from "@mui/material/Button";
+import {actionClearCart} from "../../redux/actions/actionsCart";
 
-const CartForm = ({cart}) => {
+const CartForm = ({cart, clearAll}) => {
     const [goods, setGoods] = useState(Object.values(cart))
     console.log(cart)
     console.log(goods)
@@ -18,7 +19,22 @@ const CartForm = ({cart}) => {
             {goods && goods.map(({good, count}) => {
                     return <CCartItem good={good} count={count} key={Math.random() * 10000}/>
                 })}
-            {goods.length ? <Button style={{alignSelf: 'self-end', marginTop: '20px'}} color='success' variant='contained'>Make an order</Button> : <h4>Let's order something</h4>}
+            {goods.length ?
+                <div>
+                    <Button
+                        style={{alignSelf: 'self-end', margin: '20px 20px 0 0'}}
+                        color='success'
+                        variant='contained'>
+                        Make an order
+                    </Button>
+                    <Button
+                        onClick={() => clearAll()}
+                        style={{alignSelf: 'self-end', marginTop: '20px'}}
+                        variant='text'>
+                        clear all
+                    </Button>
+                </div>
+                : <h4>Let's order something</h4>}
         </div>
     );
 };
@@ -26,5 +42,5 @@ const CartForm = ({cart}) => {
 export const CCartForm = connect((state) => ({
     cart: state?.cart
 }), {
-
+    clearAll: actionClearCart
 })(CartForm)
