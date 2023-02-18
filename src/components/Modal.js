@@ -30,10 +30,10 @@ export const ModalWindow = ({modalType, children, width}) => {
 
     return (
         <>
-            <Button
+            <div
                 onClick={handleOpen}>
                 {children || modalType}
-            </Button>
+            </div>
             <Modal
                 open={open}
                 onClose={handleClose}

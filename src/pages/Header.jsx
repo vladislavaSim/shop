@@ -20,14 +20,16 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Header = ({login, doLogout, cart}) => {
     const [cartNumber, setCartNumber] = useState(0)
-    console.log(cart)
+
     useEffect(() => {
-        console.log(cart)
-        if(cart.count) {
+        if(cart !== {}) {
             let counts = Object.values(cart)
-            //getting total number of all goods from the cart
-            setCartNumber(counts.map(item => item.count).reduce((acc, curr) => acc += curr))
-            console.log(cartNumber)
+            if(counts.length) {
+                //getting total number of all goods from the cart
+                setCartNumber(counts.map(item => item.count).reduce((acc, curr) => acc += curr))
+            } else {
+                setCartNumber(0)
+            }
         }
     }, [cart])
     return (
@@ -54,12 +56,11 @@ const Header = ({login, doLogout, cart}) => {
                 <div>
                     <ModalWindow modalType='cart' width={700}>
                         <IconButton aria-label="cart" style={{color: 'yellow'}}>
-                            <StyledBadge badgeContent={cartNumber || 0} color="error">
+                            <StyledBadge badgeContent={cartNumber} color="error">
                                 <ShoppingCartIcon />
                             </StyledBadge>
                         </IconButton>
                     </ModalWindow>
-
                 </div>
             </div>
         </header>
