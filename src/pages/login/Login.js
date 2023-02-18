@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import {connect} from "react-redux";
-import {queryLogin} from "../../graphQL/queryAuth";
 import {actionLogout, fullAuthLogin} from "../../redux/actions/actionsAuth";
 import {store} from "../../redux/store";
 
@@ -14,8 +13,7 @@ const LoginForm = ({doLogin, isLogged, doLogout, handleClose}) => {
             handleClose()
         }
     }, [isLogged])
-    console.log(isLogged)
-    console.log(store.getState())
+
     return (
         <>
            <div className='login-form'>

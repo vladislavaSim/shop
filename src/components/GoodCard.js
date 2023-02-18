@@ -2,9 +2,15 @@ import React from 'react';
 import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {backendUrl} from "../graphQL/url";
 import noImage from "../images/no-image-icon-23483.png"
+import {connect} from "react-redux";
+import {actionAddGood} from "../redux/actions/actionsCart";
+import {store} from "../redux/store";
 
-const GoodCard = ({name, price, description, images, _id, createdAt}) => {
-    // console.log(createdAt)
+const GoodCard = (good) => {
+ const {name, price, description, images, _id, addToCart} = good
+    // console.log(store.getState())
+    // console.log(good)
+
     return (
         <>
             {_id && name && price && <Card sx={{width: '220px'}} className='card'>
@@ -26,7 +32,7 @@ const GoodCard = ({name, price, description, images, _id, createdAt}) => {
                     </Typography>}
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Add to cart</Button>
+                    <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
                     <Button size="small">Learn More</Button>
                 </CardActions>
             </Card>}
@@ -34,4 +40,6 @@ const GoodCard = ({name, price, description, images, _id, createdAt}) => {
     );
 };
 
-export default GoodCard;
+export const CGoodCard = connect(null, {
+    addToCart: actionAddGood
+})(GoodCard);

@@ -84,4 +84,14 @@ main {
     right: -7px;
     color: grey;
 }
+.cart-box {
+    display: flex;
+    flex-direction: column;
+}
+#cart-item {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 

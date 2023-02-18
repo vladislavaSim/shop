@@ -4,9 +4,9 @@ import {queryAllGoods} from "../graphQL/getGoodsQuery";
 import {Button, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {CSearch} from "../components/Search";
 import Goods from "./Goods";
-import {CLogin} from "./login/Login";
+import {store} from "../redux/store";
 
-const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
+const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
     const [goods, setGoods] = useState(null)
     const [sortedBy, setSortedBy] = useState('old')
 
@@ -39,10 +39,9 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
 
     useEffect(() => {
         setGoods(goodsByName)
-        console.log(goods)
-        console.log(goodsByName)
     }, [goodsByName])
 
+    // console.log(store.getState())
     return (
        <div>
            <div className='inputs-box'>
@@ -67,7 +66,6 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
                        color="error"
                        size={'small'}
                        variant="outlined">Reset filters</Button>
-               {/*<TextField id="outlined-basic" label="Search goods" variant="outlined" />*/}
            </div>
            <div>
                {goods && <Goods goods={goods}/>}
@@ -79,7 +77,8 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
 export const CAllGoods = connect((state) => ({
     allGoods: state?.promise?.allGoods?.payload,
     goodsByCat: state?.promise?.goodsByCat?.payload?.goods,
-    goodsByName: state?.promise?.goodsByName?.payload
+    goodsByName: state?.promise?.goodsByName?.payload,
+    cart: state?.cart
 }),
     {getAll: queryAllGoods})
 (AllGoods)

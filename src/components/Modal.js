@@ -7,13 +7,14 @@ import {CLoginForm} from "../pages/login/Login";
 import {CRegistrationForm} from "../pages/login/Registration";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {IconButton} from "@mui/material";
+import {CCartForm} from "../pages/cart/CartForm";
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    // width: 400,
     bgcolor: 'background.paper',
     minHeight: '200px',
     boxShadow: 24,
@@ -22,7 +23,7 @@ const style = {
 
 
 
-export const ModalWindow = ({authType}) => {
+export const ModalWindow = ({modalType, children, width}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -31,7 +32,7 @@ export const ModalWindow = ({authType}) => {
         <>
             <Button
                 onClick={handleOpen}>
-                {authType}
+                {children || modalType}
             </Button>
             <Modal
                 open={open}
@@ -39,7 +40,7 @@ export const ModalWindow = ({authType}) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={style} width={width}>
                    <div id='closing-btn'>
                        <IconButton
                            size='large'
@@ -48,10 +49,9 @@ export const ModalWindow = ({authType}) => {
                            <HighlightOffIcon/>
                        </IconButton>
                    </div>
-                    {authType === 'log in' ?
-                        <CLoginForm handleClose={handleClose}/>
-                    : <CRegistrationForm handleClose={handleClose}/>
-                    }
+                    {modalType === 'log in' && <CLoginForm handleClose={handleClose}/>}
+                    {modalType === 'sign in' && <CRegistrationForm handleClose={handleClose}/>}
+                    {modalType === 'cart' && <CCartForm/>}
                 </Box>
             </Modal>
         </>

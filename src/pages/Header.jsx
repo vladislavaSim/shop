@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from '../images/logot.png'
 import {Button, IconButton} from "@mui/material";
 import Badge from '@mui/material/Badge';
@@ -18,7 +18,18 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-const Header = ({login, doLogout}) => {
+const Header = ({login, doLogout, cart}) => {
+    const [cartNumber, setCartNumber] = useState(0)
+    console.log(cart)
+    useEffect(() => {
+        console.log(cart)
+        if(cart.count) {
+            let counts = Object.values(cart)
+            //getting total number of all goods from the cart
+            setCartNumber(counts.map(item => item.count).reduce((acc, curr) => acc += curr))
+            console.log(cartNumber)
+        }
+    }, [cart])
     return (
         <header>
             <div className='header-box'>
@@ -29,8 +40,8 @@ const Header = ({login, doLogout}) => {
             <div className='header-box'>
                 {!login
                     ? <div className='auth-buttons-box'>
-                        <ModalWindow authType={'log in'}/>
-                        <ModalWindow authType={'sign up'}/>
+                        <ModalWindow modalType={'log in'} width={400}/>
+                        <ModalWindow modalType={'sign up'} width={400}/>
                     </div>
                     :
                     <Button
@@ -40,18 +51,24 @@ const Header = ({login, doLogout}) => {
                         Log out
                     </Button>
                 }
-                <IconButton aria-label="cart">
-                    <StyledBadge badgeContent={4} color="error">
-                        <ShoppingCartIcon />
-                    </StyledBadge>
-                </IconButton>
+                <div>
+                    <ModalWindow modalType='cart' width={700}>
+                        <IconButton aria-label="cart" style={{color: 'yellow'}}>
+                            <StyledBadge badgeContent={cartNumber || 0} color="error">
+                                <ShoppingCartIcon />
+                            </StyledBadge>
+                        </IconButton>
+                    </ModalWindow>
+
+                </div>
             </div>
         </header>
     );
 };
 
 export const CHeader = connect((state) => ({
-    login: state?.auth?.payload?.sub?.login
+    login: state?.auth?.payload?.sub?.login,
+    cart: state?.cart
 }), {
     doLogout: actionLogout
 })(Header);
