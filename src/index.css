@@ -72,4 +72,16 @@ main {
     display: flex;
     justify-content: space-around;
 }
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 185px;
+}
+#closing-btn {
+    position: absolute;
+    top: -4px;
+    right: -7px;
+    color: grey;
+}
 

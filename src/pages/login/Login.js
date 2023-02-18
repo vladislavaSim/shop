@@ -17,7 +17,7 @@ const LoginForm = ({doLogin, isLogged, doLogout, handleClose}) => {
     console.log(isLogged)
     console.log(store.getState())
     return (
-        <div>
+        <>
            <div className='login-form'>
                <TextField
                    required
@@ -34,14 +34,14 @@ const LoginForm = ({doLogin, isLogged, doLogout, handleClose}) => {
                    value={password}
                />
                <Button
-                   disabled={!login && !password}
+                   disabled={login.length < 4 && password.length < 5}
                    variant="contained"
                    onClick={() => doLogin(login, password)}
                    color="success">
                    Log in
                </Button>
            </div>
-        </div>
+        </>
     );
 };
 
