@@ -8,13 +8,10 @@ export function cartReducer(state = {}, {type, good, count = 1}) {
                         }
                 }
     }
-    // if(type === 'REMOVE_GOOD') {
-    //     return {...state,
-    //         [good.name] : {
-    //         good,
-    //             count: state?.[good.name]?.count - 1 : count
-    //         }
-    //     }
-    // }
+    if(type === 'REMOVE_GOOD') {
+            const copy = {...state}
+            delete copy[good.name]
+            return copy
+    }
     return state
 }
