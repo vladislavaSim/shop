@@ -13,6 +13,16 @@ export function cartReducer(state = {}, {type, good, count = 1}) {
             delete copy[good.name]
             return copy
     }
+    if('UPDATE_GOOD') {
+         if(good?.name) {
+             return {...state,
+                 [good?.name] : {
+                     good,
+                     count
+                 }
+             }
+         }
+    }
     if(type === 'CLEAR_CART') {
         return {}
     }

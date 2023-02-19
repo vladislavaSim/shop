@@ -7,4 +7,7 @@ export const actionRemoveGood = (good) => {
 export const actionClearCart = () => {
     return {type: 'CLEAR_CART'}
 }
+export const actionChangeGoodCount = (good, count) => {
+    return {type: 'UPDATE_CART', good, count}
+}
 
