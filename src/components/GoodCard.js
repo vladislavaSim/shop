@@ -5,6 +5,7 @@ import noImage from "../images/no-image-icon-23483.png"
 import {connect} from "react-redux";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import {store} from "../redux/store";
+import {ModalWindow} from "./Modal";
 
 const GoodCard = (good) => {
  const {name, price, description, images, _id, addToCart} = good
@@ -15,6 +16,7 @@ const GoodCard = (good) => {
         <>
             {_id && name && price && <Card sx={{width: '220px'}} className='card'>
                 {<CardMedia
+                    style={{margin: '0 auto'}}
                     component="img"
                     alt="good image"
                     height="140"
@@ -33,7 +35,9 @@ const GoodCard = (good) => {
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
-                    <Button size="small">Learn More</Button>
+                    <ModalWindow modalType='good' width={700} good={good}>
+                        <Button size="small">Learn More</Button>
+                    </ModalWindow>
                 </CardActions>
             </Card>}
         </>

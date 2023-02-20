@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import {useState} from "react";
 import {CLoginForm} from "../pages/login/Login";
@@ -8,6 +7,7 @@ import {CRegistrationForm} from "../pages/login/Registration";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {IconButton} from "@mui/material";
 import {CCartForm} from "../pages/cart/CartForm";
+import {CGoodInfoCard} from "./GoodInfoCard";
 
 const style = {
     position: 'absolute',
@@ -23,7 +23,7 @@ const style = {
 
 
 
-export const ModalWindow = ({modalType, children, width}) => {
+export const ModalWindow = ({modalType, children, width, good}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -52,6 +52,7 @@ export const ModalWindow = ({modalType, children, width}) => {
                     {modalType === 'log in' && <CLoginForm handleClose={handleClose}/>}
                     {modalType === 'sign in' && <CRegistrationForm handleClose={handleClose}/>}
                     {modalType === 'cart' && <CCartForm/>}
+                    {modalType === 'good' && <CGoodInfoCard handleClose={handleClose} good={good}/>}
                 </Box>
             </Modal>
         </>

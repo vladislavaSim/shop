@@ -103,4 +103,8 @@ main {
     box-sizing: content-box;
     background: none;
 }
+.carousel-box {
+    display: flex;
+    justify-content: center;
+}
 
