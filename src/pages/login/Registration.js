@@ -11,7 +11,6 @@ const Registration = ({doRegister, isLogged, handleClose}) => {
     const [password, setPassword] = useState('')
 
     useEffect(() => {
-        console.log(isLogged)
         if(isLogged.token) {
             handleClose()
         }

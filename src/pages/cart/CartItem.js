@@ -19,7 +19,7 @@ const CartItem = ({good, removeItem, changeCount, count}) => {
     const {name, price} = good
 
     return (
-        <div>
+        <div style={{marginBottom: '15px'}}>
             <Card>
                 {good && count && <CardContent id='cart-item'>
                     {name && <Typography gutterBottom variant="h6" component="div">
