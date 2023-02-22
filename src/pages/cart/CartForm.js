@@ -1,20 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {connect, useDispatch} from "react-redux";
+import {connect} from "react-redux";
 import {CCartItem} from "./CartItem";
 import Button from "@mui/material/Button";
-import {actionClearCart, actionFullNewOrder, actionOrderUpdate} from "../../redux/actions/actionsCart";
-import {queryMakeNewOrder} from "../../graphQL/queryOrder";
-import {store} from "../../redux/store";
+import {actionClearCart, actionFullNewOrder} from "../../redux/actions/actionsCart";
 
-const CartForm = ({cart, clearAll, makeOrder, actionOrderUpdate}) => {
+const CartForm = ({cart, clearAll, makeOrder, newOrder, handleClose}) => {
     const [goods, setGoods] = useState(Object.values(cart))
+
     let sum = goods.length ? goods.map(item => item.good.price * item.count).reduce((a, c) => a += c) : 0
-    console.log({ orderGoods: Object.values(cart) })
-    console.log(store?.getState())
-const {dispatch} = useDispatch()
+
     useEffect(() => {
        setGoods(Object.values(cart))
     }, [cart])
+
+//auto closing cart modal window after making order succeed
+    useEffect(() => {
+        if(newOrder.status === 'RESOLVED') {
+            handleClose()
+        }
+    }, [newOrder])
 
     function makeOrderNew(goods) {
         return Object.entries(goods).map((item) => {
@@ -24,7 +28,6 @@ const {dispatch} = useDispatch()
         })
     }
 
-    console.log(makeOrderNew(goods))
     return (
         <div className='cart-box'>
             <h4>Cart</h4>
@@ -55,7 +58,8 @@ const {dispatch} = useDispatch()
 };
 
 export const CCartForm = connect((state) => ({
-    cart: state?.cart
+    cart: state?.cart,
+    newOrder: state?.promise?.newOrder
 }), {
     clearAll: actionClearCart,
     makeOrder: actionFullNewOrder

@@ -53,7 +53,7 @@ export const ModalWindow = ({modalType, children, width, good}) => {
                    </div>
                     {modalType === 'log in' && <CLoginForm handleClose={handleClose}/>}
                     {modalType === 'sign in' && <CRegistrationForm handleClose={handleClose}/>}
-                    {modalType === 'cart' && <CCartForm/>}
+                    {modalType === 'cart' && <CCartForm handleClose={handleClose}/>}
                     {modalType === 'good' && <CGoodInfoCard handleClose={handleClose} good={good}/>}
                     {modalType === 'user' && <CUserInfo/>}
                 </Box>
