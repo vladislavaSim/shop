@@ -117,5 +117,9 @@ main {
     display: flex;
     justify-content: center;
 }
+.order-box {
+    display: flex;
+    justify-content: space-around;
+}
 
 
