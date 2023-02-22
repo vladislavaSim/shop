@@ -9,7 +9,7 @@ li {
     list-style: none;
 }
 header, footer{
-    height: 50px;
+    height: 65px;
     color: yellow;
     background-color: #282c34;
 }
@@ -22,6 +22,16 @@ header {
 .logo {
     width: 50px;
     margin-right: 25px;
+}
+.modal-btn {
+    margin: 0 15px;
+    border: 1px solid yellow;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.modal-btn:hover {
+    box-shadow: -1px 1px 8px yellow;
+    transform: translateY(2px);
 }
 .auth-buttons-box {
     display: flex;
@@ -107,4 +117,5 @@ main {
     display: flex;
     justify-content: center;
 }
+
 

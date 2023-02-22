@@ -8,6 +8,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {IconButton} from "@mui/material";
 import {CCartForm} from "../pages/cart/CartForm";
 import {CGoodInfoCard} from "./GoodInfoCard";
+import {CUserInfo} from "../pages/user/UserInfo";
 
 const style = {
     position: 'absolute',
@@ -29,8 +30,9 @@ export const ModalWindow = ({modalType, children, width, good}) => {
     const handleClose = () => setOpen(false);
 
     return (
-        <>
+        <div className='modal-box'>
             <div
+                className='modal-btn'
                 onClick={handleOpen}>
                 {children || modalType}
             </div>
@@ -53,8 +55,9 @@ export const ModalWindow = ({modalType, children, width, good}) => {
                     {modalType === 'sign in' && <CRegistrationForm handleClose={handleClose}/>}
                     {modalType === 'cart' && <CCartForm/>}
                     {modalType === 'good' && <CGoodInfoCard handleClose={handleClose} good={good}/>}
+                    {modalType === 'user' && <CUserInfo/>}
                 </Box>
             </Modal>
-        </>
+        </div>
     );
 }
