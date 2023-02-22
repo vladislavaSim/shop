@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {CCartItem} from "./CartItem";
 import Button from "@mui/material/Button";
 import {actionClearCart, actionFullNewOrder} from "../../redux/actions/actionsCart";
+import {store} from "../../redux/store";
 
 const CartForm = ({cart, clearAll, makeOrder, newOrder, handleClose}) => {
     const [goods, setGoods] = useState(Object.values(cart))
@@ -15,7 +16,7 @@ const CartForm = ({cart, clearAll, makeOrder, newOrder, handleClose}) => {
 
 //auto closing cart modal window after making order succeed
     useEffect(() => {
-        if(newOrder.status === 'RESOLVED') {
+        if(newOrder?.status === 'RESOLVED') {
             handleClose()
         }
     }, [newOrder])
