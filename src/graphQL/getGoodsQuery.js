@@ -3,6 +3,7 @@ import {actionPromise} from "../redux/reducers/promiseReducer";
 import {gql} from "./getgql";
 
 export const queryAllGoods = () => {
+    console.log('all goods')
     return actionPromise('allGoods',
         gql(`query allGoods{
           GoodFind(query: "[{}]") {
