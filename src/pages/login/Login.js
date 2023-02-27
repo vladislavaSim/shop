@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import {connect} from "react-redux";
 import {actionLogout, fullAuthLogin} from "../../redux/actions/actionsAuth";
-import {store} from "../../redux/store";
 
 const LoginForm = ({doLogin, isLogged, doLogout, handleClose}) => {
     const [login, setLogin] = useState('')

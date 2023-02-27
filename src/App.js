@@ -2,15 +2,32 @@ import './App.css';
 import Main from "./pages/Main";
 import {CHeader} from "./pages/Header";
 import Footer from "./pages/Footer";
+import {BrowserRouter} from "react-router-dom";
+import {connect, useDispatch} from "react-redux";
+import {useEffect} from "react";
+import {getCatsQuery, getGoodsByCat} from "./graphQL/getCats";
+import {queryAllGoods} from "./graphQL/getGoodsQuery";
 
-function App() {
+function App({getAll, getCats}) {
+    const dispatch = useDispatch()
+
+    //initial getting all categories
+    useEffect(() => {
+        dispatch(() => getCats())
+        dispatch(() => getAll())
+    }, [])
   return (
-    <div className="App">
-      <CHeader/>
-      <Main/>
-      <Footer/>
-    </div>
+   <BrowserRouter>
+       <div className="App">
+           <CHeader/>
+           <Main/>
+           <Footer/>
+       </div>
+   </BrowserRouter>
   );
 }
 
-export default App;
+export const CApp = connect(null, {
+    getCats: getCatsQuery,
+    getAll: queryAllGoods
+})(App);

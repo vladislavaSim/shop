@@ -8,6 +8,7 @@ import {ModalWindow} from "../components/Modal";
 import {connect} from "react-redux";
 import PersonIcon from '@mui/icons-material/Person';
 import {actionLogout} from "../redux/actions/actionsAuth";
+import {Link} from "react-router-dom";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -41,6 +42,12 @@ const Header = ({login, doLogout, cart}) => {
                     {login ? login : 'Guest'}
                 </ModalWindow>
             </div>
+            {
+                login === 'admin'
+            && <Link to='/createNewGood'>
+                create a good
+            </Link>
+            }
             <div className='header-box'>
                 {!login
                     ? <div className='auth-buttons-box'>
@@ -75,3 +82,5 @@ export const CHeader = connect((state) => ({
 }), {
     doLogout: actionLogout
 })(Header);
+
+

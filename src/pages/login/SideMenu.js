@@ -1,14 +1,17 @@
 import React, {useEffect} from 'react';
 import {connect, useDispatch} from "react-redux";
 import {getCatsQuery, getGoodsByCat} from "../../graphQL/getCats";
+import {queryAllGoods} from "../../graphQL/getGoodsQuery";
+import {Link} from "react-router-dom";
 
-const SideMenu = ({categories, getCats, getGoodsByCat, promise}) => {
+const SideMenu = ({categories, getCats, getGoodsByCat, getAll}) => {
     const dispatch = useDispatch()
-
-    //initial getting all categories
-    useEffect(() => {
-        dispatch(() => getCats())
-    }, [])
+    //
+    // //initial getting all categories
+    // useEffect(() => {
+    //     dispatch(() => getCats())
+    //     dispatch(() => getAll())
+    // }, [])
     // console.log(promise)
     return (
         <aside className='side-menu'>
@@ -19,7 +22,7 @@ const SideMenu = ({categories, getCats, getGoodsByCat, promise}) => {
                         className='cats_item'
                         key={item._id}
                         onClick={() => dispatch(() => getGoodsByCat(item.name))}>
-                            {item.name}
+                        <Link to='/' className='cats_item'>{item.name}</Link>
                             </li>
                 })
                 }
@@ -33,5 +36,6 @@ export const CSideMenu = connect((state) => ({
     promise: state?.promise
 }), {
     getCats: getCatsQuery,
-    getGoodsByCat: getGoodsByCat
+    getGoodsByCat: getGoodsByCat,
+    getAll: queryAllGoods
 })(SideMenu);
