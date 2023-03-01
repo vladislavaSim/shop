@@ -3,7 +3,7 @@ import {getDate} from "../../DateFormating";
 import GoodBriefInfo from "../../components/GoodBriefInfo";
 
 const OrderInfo = ({total, createdAt, goods}) => {
-
+    console.log(goods)
     return (
         <div className='order-box'>
             <p>{total} UAH</p>

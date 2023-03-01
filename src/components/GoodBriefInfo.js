@@ -2,8 +2,9 @@ import React from 'react';
 import {backendUrl} from "../graphQL/url";
 
 const GoodBriefInfo = ({good, count}) => {
+
     const {name, images} = good
-    // console.log(count)
+
     return (
         <div className='order-box' style={{flexGrow: '0.2'}}>
             <div>

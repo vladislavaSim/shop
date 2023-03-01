@@ -41,5 +41,6 @@ export const CUserInfo = connect((state) => ({
     user: state?.auth?.payload?.sub
 }), {
     queryOrdersByUser: queryOrdersByUser,
-    userById: findUserById
+    userById: findUserById,
+
 })(UserInfo);

@@ -11,8 +11,8 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
     const [goods, setGoods] = useState(null)
     const [sortedBy, setSortedBy] = useState('old')
 
-    const dispatch = useDispatch()
-    console.log(store?.getState())
+    console.log(goods)
+
 // //initial dispatch to get all goods
 //     useEffect(() => {
 //         dispatch(() => getAll())
@@ -42,12 +42,13 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
         setGoods(goodsByName)
     }, [goodsByName])
 
-    // console.log(store.getState())
+    console.log(store.getState())
     return (
        <>
            <div className='inputs-box'>
                <FormControl fullWidth style={{width: '300px'}}>
                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+
                    <Select
                        labelId="demo-simple-select-label"
                        id="demo-simple-select"

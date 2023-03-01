@@ -8,9 +8,9 @@ import {store} from "../redux/store";
 import {ModalWindow} from "./Modal";
 
 const GoodCard = (good) => {
- const {name, price, description, images, _id, addToCart} = good
+ const {name, price, description, images, _id, addToCart, cat} = good
     // console.log(store.getState())
-    // console.log(good)
+    // console.log(cat)
 
     return (
         <>
@@ -22,6 +22,9 @@ const GoodCard = (good) => {
                     height="140"
                     image={images?.[0]?.url ? backendUrl + images?.[0]?.url : noImage}
                 />}
+                { cat && <Typography variant="body2" color="text.secondary">
+                    {cat?.name}
+                </Typography>}
                 <CardContent style={{paddingBottom: '0'}}>
                     { name && <Typography gutterBottom variant="h6" component="div">
                         {name.slice(0, 30) + '...'}

@@ -1,15 +1,16 @@
-
 import {actionPromise} from "../redux/reducers/promiseReducer";
 import {gql} from "./getgql";
 
 export const queryAllGoods = () => {
-    console.log('all goods')
     return actionPromise('allGoods',
         gql(`query allGoods{
           GoodFind(query: "[{}]") {
             _id, name, price, createdAt, description, images {
               _id
               url
+            }
+            categories {
+                name
             }
           }
         }`)
@@ -22,8 +23,11 @@ export const queryGoodsByName = (name) =>
              await gql(`query GoodsByName($name: String){
           GoodFind(query: $name){
             _id, name, price, description, createdAt, images {
-              _id url
-            }
+                    _id url
+                 }
+                 categories {
+                     name
+                 }
           }
         }`,
                  //regex for good name searching

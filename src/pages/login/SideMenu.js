@@ -6,23 +6,17 @@ import {Link} from "react-router-dom";
 
 const SideMenu = ({categories, getCats, getGoodsByCat, getAll}) => {
     const dispatch = useDispatch()
-    //
-    // //initial getting all categories
-    // useEffect(() => {
-    //     dispatch(() => getCats())
-    //     dispatch(() => getAll())
-    // }, [])
-    // console.log(promise)
+
     return (
         <aside className='side-menu'>
             <ul>
                 { categories &&
                 categories.map((item) => {
                     return <li
-                        className='cats_item'
-                        key={item._id}
-                        onClick={() => dispatch(() => getGoodsByCat(item.name))}>
-                        <Link to='/' className='cats_item'>{item.name}</Link>
+                                className='cats_item'
+                                key={item._id}
+                                onClick={() => dispatch(() => getGoodsByCat(item.name))}>
+                                <Link to='/' className='cats_item'>{item.name}</Link>
                             </li>
                 })
                 }
