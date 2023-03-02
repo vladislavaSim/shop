@@ -3,8 +3,8 @@ import {gql} from "../getgql";
 
 export const queryGoodUpsert = (good) => {
     console.log(good)
-
-    return actionPromise('orderUpsert',
+    console.log(111)
+    return actionPromise('goodUpsert',
         gql(`mutation addNewGood($good: GoodInput!){
               GoodUpsert(good: $good) {
                 _id name description price images {
@@ -14,6 +14,18 @@ export const queryGoodUpsert = (good) => {
                     name
                 }
               }
+            }`, {good}
+        )
+    )
+}
+
+export const queryGoodDelete = (good) => {
+    console.log(good)
+    return actionPromise('goodDelete',
+        gql(`mutation addNewGood($good: GoodInput!){
+             GoodDelete(good:$good){
+                    _id name
+                }
             }`, {good}
         )
     )
