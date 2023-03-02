@@ -7,8 +7,8 @@ import {actionAddGood} from "../redux/actions/actionsCart";
 import {ModalWindow} from "./Modal";
 
 const GoodCard = (good, addToCart) => {
- const {name, price, description, images, _id, categories = []} = good
-    // console.log(store.getState())
+ const {name, price, description, images, _id, categories} = good
+    // console.log(good)
     return (
         <>
             {_id && <Card sx={{width: '220px'}} className='card'>

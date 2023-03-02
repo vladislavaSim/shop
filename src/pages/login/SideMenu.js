@@ -6,9 +6,11 @@ import {Link} from "react-router-dom";
 import {queryCatDelete} from "../../graphQL/admin/actionCategory";
 import Button from "@mui/material/Button";
 
-const SideMenu = ({categories, login, getGoodsByCat, removeCat}) => {
+const SideMenu = ({categories, login, getCats, getGoodsByCat, removeCat}) => {
     const dispatch = useDispatch()
-
+// useEffect(() => {
+//     dispatch(() => getCats())
+// }, [categories])
     return (
         <aside className='side-menu'>
             <ul>
@@ -18,10 +20,17 @@ const SideMenu = ({categories, login, getGoodsByCat, removeCat}) => {
                                 className='cats_item'
                                 key={_id}
                                 onClick={() => dispatch(() => getGoodsByCat(name))}>
-                                <Link to='/' className='cats_item'>
+                        {login === 'admin' &&
+                            <Button
+                                size='small'
+                                color='error'
+                                variant="contained"
+                                onClick={() => removeCat({_id, name})}>x
+                            </Button>
+                        }
+                        <Link to='/' className='cats_item'>
                                     {name}
                                 </Link>
-                        {login === 'admin' && <Button color='error' variant="contained" onClick={() => removeCat({_id, name})}>x</Button>}
                             </li>
                 })
                 }

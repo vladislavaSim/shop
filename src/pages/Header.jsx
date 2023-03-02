@@ -36,7 +36,9 @@ const Header = ({login, doLogout, cart}) => {
     return (
         <header>
             <div className='header-box'>
-                <img src={logo} alt="logo" className={'logo'}/>
+               <Link to='/'>
+                   <img src={logo} alt="logo" className={'logo'}/>
+               </Link>
                 <ModalWindow modalType='user' width={700}>
                     <PersonIcon/>
                     {login ? login : 'Guest'}

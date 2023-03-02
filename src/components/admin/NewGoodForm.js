@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {MenuItem, TextField} from "@mui/material";
+import {MenuItem, Select, TextField} from "@mui/material";
 import {connect, useDispatch} from "react-redux";
 import Button from "@mui/material/Button";
 import {actionGoodUpsert} from "../../redux/actions/adminActions";
@@ -11,20 +11,22 @@ const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats}) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
-    const [category, setCategory] = useState('')
-
-    console.log(store.getState())
-
+    const [categories, setCategories] = useState()
+    //
+    // console.log(store.getState())
+    console.log(categories)
     function makeGoodObj() {
         let goodToSave = {};
         goodToSave.name = name;
         goodToSave.description = description;
         goodToSave.price = +price;
-        goodToSave.categories = [{name: category}];
-        goodToSave.images = [goodPic].map(({ _id }) => ({ _id }));
+        goodToSave.categories = [categories]
+        goodToSave.images = [];
+        goodToSave.images.push({_id: goodPic?._id})
         return goodToSave
     }
 
+    console.log(categories)
 
     return (
         <div className='admin-form'>
@@ -61,14 +63,21 @@ const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats}) => {
                 label="category"
                 defaultValue="Smartphone"
                 helperText="Please select the category"
-                onChange={(e) => setCategory(e.target.value)}
-            >
+                onChange={(e, newValue) => setCategories({name: e.target.value, _id: newValue.key.substring(2, newValue.key.length)})}>
                 {allCats.map((cat) => (
                     <MenuItem key={cat._id} value={cat.name}>
                         {cat.name}
                     </MenuItem>
                 ))}
             </TextField>
+            {/*<Select*/}
+            {/*    placeholder="Обрати категорії"*/}
+            {/*    value={categories.map(({ _id, name }) => ({ value: _id, label: name }))}*/}
+            {/*    closeMenuOnSelect={false}*/}
+            {/*    onChange={(e) => allCats(e.map(({ label, value }) => ({ _id: value, name: label })))}*/}
+            {/*    options={allCats?.map(({ _id, name }) => ({ value: _id, label: name }))}*/}
+            {/*    isMulti={true}*/}
+            {/*/>*/}
             <Button
                 variant="contained"
                 color='success'

@@ -9,6 +9,6 @@ export const actionGoodUpsert = (good) =>
         await dispatch(queryGoodUpsert(good))
         await dispatch(getCatsQuery())
         await dispatch(queryAllGoods())
-        await dispatch(clearPromiseByName('orderUpsert'))
+        await dispatch(clearPromiseByName('goodUpsert'))
     }
 

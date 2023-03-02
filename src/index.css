@@ -142,5 +142,8 @@ main {
 .admin-form > div {
     margin-bottom: 25px;
 }
+.css-o69gx8-MuiCardMedia-root {
+    width: 50% !important;
+}
 
 
