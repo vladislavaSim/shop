@@ -7,7 +7,7 @@ const Goods = ({goods}) => {
             {
                 goods.map(({_id, name, price, categories, description, images, createdAt}) => {
                     return <CGoodCard
-                                cat={categories && categories?.[0]}
+                                categories={[categories?.[0]]}
                                 key={_id}
                                 name={name}
                                 images={images}

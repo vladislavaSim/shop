@@ -5,11 +5,11 @@ import {backendUrl} from "../graphQL/url";
 import noImage from "../images/no-image-icon-23483.png";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import Carousel from 'react-material-ui-carousel'
+import {queryGoodDelete} from "../graphQL/admin/actionGood";
 
-const GoodInfoCard = ({good}) => {
-    const {name, price, description, images, _id, addToCart, categories} = good
-    // const category = good && good?.categories[0] || null
-    console.log(good)
+const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
+    const {name, price, description, images, _id, categories} = good
+    console.log({_id, name})
     return (
         <>
             {_id && name && price && <div style={{width: '100%'}} className='card'>
@@ -54,6 +54,8 @@ const GoodInfoCard = ({good}) => {
                     </Typography>}
                 </CardContent>
                 <CardActions>
+                    {login === 'admin' && <Button size="small" onClick={() => deleteGood({_id, name})}>DELETE</Button>
+                    }
                     <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
                 </CardActions>
             </div>}
@@ -65,9 +67,11 @@ export const CGoodInfoCard = connect((state) => ({
         allGoods: state?.promise?.allGoods?.payload,
         goodsByCat: state?.promise?.goodsByCat?.payload?.goods,
         goodsByName: state?.promise?.goodsByName?.payload,
-        cart: state?.cart
+        cart: state?.cart,
+        login: state?.auth?.payload?.sub?.login
     }),
     {
-        addToCart: actionAddGood
+        addToCart: actionAddGood,
+        deleteGood: queryGoodDelete
     })
 (GoodInfoCard)

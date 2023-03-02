@@ -11,7 +11,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
     const [goods, setGoods] = useState(null)
     const [sortedBy, setSortedBy] = useState('old')
 
-    console.log(goods)
+    // console.log(goods)
 
 // //initial dispatch to get all goods
 //     useEffect(() => {

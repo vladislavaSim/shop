@@ -4,17 +4,14 @@ import {backendUrl} from "../graphQL/url";
 import noImage from "../images/no-image-icon-23483.png"
 import {connect} from "react-redux";
 import {actionAddGood} from "../redux/actions/actionsCart";
-import {store} from "../redux/store";
 import {ModalWindow} from "./Modal";
 
-const GoodCard = (good) => {
- const {name, price, description, images, _id, addToCart, cat} = good
+const GoodCard = (good, addToCart) => {
+ const {name, price, description, images, _id, categories = []} = good
     // console.log(store.getState())
-    // console.log(cat)
-
     return (
         <>
-            {_id && name && price && <Card sx={{width: '220px'}} className='card'>
+            {_id && <Card sx={{width: '220px'}} className='card'>
                 {<CardMedia
                     style={{margin: '0 auto'}}
                     component="img"
@@ -22,18 +19,18 @@ const GoodCard = (good) => {
                     height="140"
                     image={images?.[0]?.url ? backendUrl + images?.[0]?.url : noImage}
                 />}
-                { cat && <Typography variant="body2" color="text.secondary">
-                    {cat?.name}
+                { categories && <Typography variant="body2" color="text.secondary">
+                    {categories?.[0]?.name}
                 </Typography>}
                 <CardContent style={{paddingBottom: '0'}}>
-                    { name && <Typography gutterBottom variant="h6" component="div">
-                        {name.slice(0, 30) + '...'}
+                    { <Typography gutterBottom variant="h6" component="div">
+                        {name?.slice(0, 30) + '...' || null}
                     </Typography>}
-                    { description && <Typography variant="body2" color="text.secondary">
-                        {description.slice(0, 70) + '...'}
+                    { <Typography variant="body2" color="text.secondary">
+                        {description?.slice(0, 70) + '...' || null}
                     </Typography>}
-                    { price && <Typography gutterBottom variant="h7" component="div">
-                        {price + ' UAH'}
+                    {<Typography gutterBottom variant="h7" component="div">
+                        {price + ' UAH' || null}
                     </Typography>}
                 </CardContent>
                 <CardActions>
