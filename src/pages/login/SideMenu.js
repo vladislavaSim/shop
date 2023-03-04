@@ -1,18 +1,50 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect, useDispatch} from "react-redux";
 import {getCatsQuery, getGoodsByCat} from "../../graphQL/getCats";
 import {queryAllGoods} from "../../graphQL/getGoodsQuery";
 import {Link} from "react-router-dom";
-import {queryCatDelete} from "../../graphQL/admin/actionCategory";
+import {actionCategoryUpsert, queryCatDelete} from "../../graphQL/admin/actionCategory";
 import Button from "@mui/material/Button";
+import {TextField} from "@mui/material";
 
-const SideMenu = ({categories, login, getCats, getGoodsByCat, removeCat}) => {
+const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat}) => {
+    const [isEdit, setIsEdit] = useState(false)
+    const [newCat, setNewCat] = useState('')
+
     const dispatch = useDispatch()
-// useEffect(() => {
-//     dispatch(() => getCats())
-// }, [categories])
+
     return (
         <aside className='side-menu'>
+            {login === 'admin' &&
+            <Button
+                onClick={() => setIsEdit(!isEdit)}
+                size='small'
+                color='error'
+                variant="contained">
+                {isEdit ? 'End editing' : 'Edit categories'}
+            </Button>}
+            {
+                isEdit &&
+                <div className='cat-editing-box'>
+                    <TextField
+                        size={'small'}
+                        required
+                        id="outlined-required"
+                        label="new category name"
+                        onChange={(e) => setNewCat(e.target.value)}
+                        value={newCat}
+                    />
+                    <Button
+                        style={{padding: 0}}
+                        onClick={() => addCat({name: newCat, subCategories: [], goods: []})}
+                        size='small'
+                        color='success'
+                        disabled={!newCat}
+                        variant="contained">
+                        Add
+                    </Button>
+                </div>
+            }
             <ul>
                 { categories &&
                 categories.map(({_id, name}) => {
@@ -20,7 +52,7 @@ const SideMenu = ({categories, login, getCats, getGoodsByCat, removeCat}) => {
                                 className='cats_item'
                                 key={_id}
                                 onClick={() => dispatch(() => getGoodsByCat(name))}>
-                        {login === 'admin' &&
+                        {isEdit &&
                             <Button
                                 size='small'
                                 color='error'
@@ -47,5 +79,6 @@ export const CSideMenu = connect((state) => ({
     getCats: getCatsQuery,
     getGoodsByCat: getGoodsByCat,
     getAll: queryAllGoods,
-    removeCat: queryCatDelete
+    removeCat: queryCatDelete,
+    addCat: actionCategoryUpsert
 })(SideMenu);

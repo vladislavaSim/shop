@@ -2,6 +2,7 @@ import {actionPromise} from "../../redux/reducers/promiseReducer";
 import {gql} from "../getgql";
 
 export const actionCategoryUpsert = (category) => {
+    console.log(category)
     return actionPromise(
         "categoryUpsert",
         gql(
@@ -11,11 +12,8 @@ export const actionCategoryUpsert = (category) => {
                         parent{
                             _id, name
                         }
-                        subcategories{
+                        subCategories{
                             _id name
-                        }
-                        goods{
-                            _id name price amount
                         }
                     }
                 }`,
