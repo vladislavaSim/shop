@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {MenuItem, Select, TextField} from "@mui/material";
 import {connect, useDispatch} from "react-redux";
 import Button from "@mui/material/Button";
@@ -6,15 +6,18 @@ import {actionGoodUpsert} from "../../redux/actions/adminActions";
 import {actionFilesUpload, actionFileUpload} from "../../redux/actions/actionFileUpload";
 import {store} from "../../redux/store";
 import {backendUrl} from "../../graphQL/url";
+import {useNavigate} from "react-router";
 
-const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats}) => {
+const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats, promise}) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [categories, setCategories] = useState()
     //
-    // console.log(store.getState())
-    console.log(categories)
+
+    const navigate = useNavigate()
+    console.log(store.getState())
+    console.log()
     function makeGoodObj() {
         let goodToSave = {};
         goodToSave.name = name;
@@ -26,8 +29,11 @@ const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats}) => {
         return goodToSave
     }
 
-    console.log(categories)
-
+    useEffect(() => {
+        if(promise?.goodUpsert?.status === 'RESOLVED') {
+            navigate('/')
+        }
+    }, [promise])
     return (
         <div className='admin-form'>
             {goodPic && <img src={backendUrl + goodPic.url} style={{height: 'auto', width: '250px'}}/> }

@@ -8,6 +8,7 @@ export const actionGoodUpsert = (good) =>
         console.log(good)
         await dispatch(queryGoodUpsert(good))
         await dispatch(getCatsQuery())
+        await dispatch(clearPromiseByName('uploadFile'))
         await dispatch(queryAllGoods())
         await dispatch(clearPromiseByName('goodUpsert'))
     }
