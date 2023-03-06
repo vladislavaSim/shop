@@ -7,12 +7,14 @@ import {actionFilesUpload, actionFileUpload} from "../../redux/actions/actionFil
 import {store} from "../../redux/store";
 import {backendUrl} from "../../graphQL/url";
 import {useNavigate} from "react-router";
+import {CImageUpload} from "./ImageUpload";
 
-const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats, promise}) => {
+const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats, promise}) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [categories, setCategories] = useState()
+    const [images, setImages] = useState()
     //
 
     const navigate = useNavigate()
@@ -24,8 +26,8 @@ const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats, promise}) => {
         goodToSave.description = description;
         goodToSave.price = +price;
         goodToSave.categories = [categories]
-        goodToSave.images = [];
-        goodToSave.images.push({_id: goodPic?._id})
+        goodToSave.images = images;
+        console.log(goodToSave)
         return goodToSave
     }
 
@@ -34,11 +36,27 @@ const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats, promise}) => {
             navigate('/')
         }
     }, [promise])
+
+    useEffect(() => {
+        if(promise?.uploadFile?.status === 'RESOLVED') {
+            setImages(goodPic.map(item => {
+                return {'_id': item._id}
+            }))
+        }
+    }, [promise])
+    console.log(images)
+    function onUploadFunc(files) {
+        console.log(files)
+        if(files) {
+            files.length > 1 ? onUploadFiles(files) : onUploadFile(files)
+        }
+    }
     return (
         <div className='admin-form'>
-            {goodPic && <img src={backendUrl + goodPic.url} style={{height: 'auto', width: '250px'}}/> }
+            <CImageUpload/>
             <input
-                onChange={(e) => onUploadFile(e.target.files[0])}
+                multiple={true}
+                onChange={(e) => onUploadFunc(e.target.files)}
                 type="file"
             />
             <TextField
@@ -97,7 +115,8 @@ const NewGoodForm = ({onUploadFile, goodPic, addNewGood, allCats, promise}) => {
 export const CNewGoodForm = connect((state) => ({
     promise: state?.promise,
     allCats: state?.promise?.allCats?.payload,
-    goodPic: state?.promise?.uploadFile?.payload
+    goodPic: state?.promise?.uploadFile?.payload,
+    goodPics: state?.promise?.uploadFiles?.payload
 }), {
     addNewGood: actionGoodUpsert,
     onUploadFile: actionFileUpload,
