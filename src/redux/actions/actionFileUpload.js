@@ -1,9 +1,7 @@
 import {actionPromise} from "../reducers/promiseReducer";
 import {backendUrl} from "../../graphQL/url";
-import {logDOM} from "@testing-library/react";
 
 export const actionFileUpload = (file) => {
-    console.log(file)
     const formdata = new FormData();
     formdata.append('photo', file);
     return actionPromise(
@@ -16,14 +14,6 @@ export const actionFileUpload = (file) => {
             body: formdata
         }).then(res => res.json()))
 }
-
-// export const actionFilesUpload = (files) =>
-//     async (dispatch) => {
-//         console.log(files)
-//         for(let file of files) {
-//             await dispatch(actionFileUpload(file))
-//         }
-//     }
 
 export const actionFilesUpload = (files) => {
     let promiseResult = [];

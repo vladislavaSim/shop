@@ -15,11 +15,10 @@ const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats,
     const [price, setPrice] = useState('')
     const [categories, setCategories] = useState()
     const [images, setImages] = useState()
-    //
 
     const navigate = useNavigate()
     console.log(store.getState())
-    console.log()
+
     function makeGoodObj() {
         let goodToSave = {};
         goodToSave.name = name;
@@ -37,18 +36,18 @@ const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats,
         }
     }, [promise])
 
+    //setting images for preview after uploading (for 1 pic or more)
     useEffect(() => {
         if(promise?.uploadFile?.status === 'RESOLVED') {
-            setImages(goodPic.map(item => {
+            setImages(goodPic.length > 1 ? goodPic.map(item => {
                 return {'_id': item._id}
-            }))
+            }) : {'_id': goodPic._id})
         }
     }, [promise])
-    console.log(images)
+
     function onUploadFunc(files) {
-        console.log(files)
         if(files) {
-            files.length > 1 ? onUploadFiles(files) : onUploadFile(files)
+            files.length > 1 ? onUploadFiles(files) : onUploadFile(files[0])
         }
     }
     return (
