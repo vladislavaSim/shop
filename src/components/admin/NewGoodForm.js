@@ -5,30 +5,20 @@ import Button from "@mui/material/Button";
 import {actionGoodUpsert} from "../../redux/actions/adminActions";
 import {actionFilesUpload, actionFileUpload} from "../../redux/actions/actionFileUpload";
 import {store} from "../../redux/store";
-import {backendUrl} from "../../graphQL/url";
 import {useNavigate} from "react-router";
-import {CImageUpload} from "./ImageUpload";
+import {clearPromiseByName} from "../../redux/actions/actionsPromise";
+import ImagePreview from "./ImagePreview";
+import {backendUrl} from "../../graphQL/url";
 
 const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats, promise}) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [categories, setCategories] = useState()
-    const [images, setImages] = useState()
+    const [images, setImages] = useState([])
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log(store.getState())
-
-    function makeGoodObj() {
-        let goodToSave = {};
-        goodToSave.name = name;
-        goodToSave.description = description;
-        goodToSave.price = +price;
-        goodToSave.categories = [categories]
-        goodToSave.images = images;
-        console.log(goodToSave)
-        return goodToSave
-    }
 
     useEffect(() => {
         if(promise?.goodUpsert?.status === 'RESOLVED') {
@@ -36,28 +26,60 @@ const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats,
         }
     }, [promise])
 
-    //setting images for preview after uploading (for 1 pic or more)
+    function deleteImage(image) {
+        setImages(images.filter(img => img._id !== image))
+    }
+
+    function clearAllImages() {
+        dispatch(clearPromiseByName('uploadFile'))
+        setImages([])
+    }
+
     useEffect(() => {
         if(promise?.uploadFile?.status === 'RESOLVED') {
-            setImages(goodPic.length > 1 ? goodPic.map(item => {
-                return {'_id': item._id}
-            }) : {'_id': goodPic._id})
+            const newPics = goodPic.length ? goodPic : [goodPic]
+            setImages([...images, ...newPics])
         }
     }, [promise])
 
+    function makeGoodObj() {
+        return {
+            name,
+            description,
+            price: +price,
+            categories: [categories],
+            images: images.map(img => {
+                return {_id: img._id}
+            })
+        };
+    }
     function onUploadFunc(files) {
         if(files) {
             files.length > 1 ? onUploadFiles(files) : onUploadFile(files[0])
         }
     }
+
     return (
         <div className='admin-form'>
-            <CImageUpload/>
-            <input
-                multiple={true}
-                onChange={(e) => onUploadFunc(e.target.files)}
-                type="file"
-            />
+            <div className='preview-box'>
+                {
+                    images && images.map((image, key) => {
+                        return <ImagePreview key={key} image={image} alt="preview" deleteImg={deleteImage}/>
+                    })
+                }
+                {images.length > 1 && <Button
+                    size='small'
+                    variant='filled'
+                    color='error'
+                    onClick={() => clearAllImages()}>
+                    Clear
+                </Button>}
+                <input
+                    multiple={true}
+                    onChange={(e) => onUploadFunc(e.target.files)}
+                    type="file"
+                />
+            </div>
             <TextField
                 required
                 id="outlined-required"
@@ -81,7 +103,6 @@ const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats,
                 value={price}
             />
             <TextField
-                // id="outlined-select-currency"
                 select
                 label="category"
                 defaultValue="Smartphone"
@@ -93,14 +114,6 @@ const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats,
                     </MenuItem>
                 ))}
             </TextField>
-            {/*<Select*/}
-            {/*    placeholder="Обрати категорії"*/}
-            {/*    value={categories.map(({ _id, name }) => ({ value: _id, label: name }))}*/}
-            {/*    closeMenuOnSelect={false}*/}
-            {/*    onChange={(e) => allCats(e.map(({ label, value }) => ({ _id: value, name: label })))}*/}
-            {/*    options={allCats?.map(({ _id, name }) => ({ value: _id, label: name }))}*/}
-            {/*    isMulti={true}*/}
-            {/*/>*/}
             <Button
                 variant="contained"
                 color='success'
@@ -115,7 +128,6 @@ export const CNewGoodForm = connect((state) => ({
     promise: state?.promise,
     allCats: state?.promise?.allCats?.payload,
     goodPic: state?.promise?.uploadFile?.payload,
-    goodPics: state?.promise?.uploadFiles?.payload
 }), {
     addNewGood: actionGoodUpsert,
     onUploadFile: actionFileUpload,

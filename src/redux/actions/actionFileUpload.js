@@ -21,7 +21,7 @@ export const actionFilesUpload = (files) => {
     for (let i = 0; i < files.length; i++) {
         let formdata = new FormData();
         formdata.append('photo', files[i]);
-        let oneRes = fetch(backendUrl +'upload', {
+        let oneRes = fetch(backendUrl + 'upload', {
             method: 'POST',
             headers: localStorage.authToken
                 ? { Authorization: 'Bearer ' + localStorage.authToken }
@@ -38,3 +38,4 @@ export const actionFilesUpload = (files) => {
             .then((res) => Promise.all(res))
     );
 };
+
