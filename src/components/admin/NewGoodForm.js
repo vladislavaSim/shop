@@ -4,22 +4,28 @@ import {connect, useDispatch} from "react-redux";
 import Button from "@mui/material/Button";
 import {actionGoodUpsert} from "../../redux/actions/adminActions";
 import {actionFilesUpload, actionFileUpload} from "../../redux/actions/actionFileUpload";
-import {store} from "../../redux/store";
 import {useNavigate} from "react-router";
 import {clearPromiseByName} from "../../redux/actions/actionsPromise";
 import ImagePreview from "./ImagePreview";
-import {backendUrl} from "../../graphQL/url";
 
-const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats, promise}) => {
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
+const NewGoodForm = ({onUploadFiles,
+                         onUploadFile,
+                         goodPic,
+                         addNewGood,
+                         allCats,
+                         promise,
+                         good,
+                         isEditing}) => {
+
+    const [name, setName] = useState(good?.name || '')
+    const [description, setDescription] = useState(good?.description || '')
+    const [price, setPrice] = useState(good?.price || '')
     const [categories, setCategories] = useState()
-    const [images, setImages] = useState([])
+    const [images, setImages] = useState(good?.images || [])
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    console.log(good)
     useEffect(() => {
         if(promise?.goodUpsert?.status === 'RESOLVED') {
             navigate('/')
@@ -43,16 +49,24 @@ const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats,
     }, [promise])
 
     function makeGoodObj() {
-        return {
+        const obj = {
             name,
             description,
             price: +price,
-            categories: [categories],
+            categories: [categories] || [],
             images: images.map(img => {
                 return {_id: img._id}
             })
         };
+        if(good?._id) {
+            obj._id = good._id
+        }
+        return obj
     }
+
+    console.log(makeGoodObj())
+
+    console.log(good?.categories[0])
     function onUploadFunc(files) {
         if(files) {
             files.length > 1 ? onUploadFiles(files) : onUploadFile(files[0])
@@ -105,7 +119,7 @@ const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats,
             <TextField
                 select
                 label="category"
-                defaultValue="Smartphone"
+                defaultValue={good && good?.categories && good?.categories[0]?.name || "Smartphone"}
                 helperText="Please select the category"
                 onChange={(e, newValue) => setCategories({name: e.target.value, _id: newValue.key.substring(2, newValue.key.length)})}>
                 {allCats.map((cat) => (
@@ -118,7 +132,7 @@ const NewGoodForm = ({onUploadFiles, onUploadFile, goodPic, addNewGood, allCats,
                 variant="contained"
                 color='success'
                 onClick={() => addNewGood(makeGoodObj())}>
-                Add
+                {isEditing ? 'Save' : 'Add'}
             </Button>
         </div>
     );

@@ -9,6 +9,7 @@ import {IconButton} from "@mui/material";
 import {CCartForm} from "../pages/cart/CartForm";
 import {CGoodInfoCard} from "./GoodInfoCard";
 import {CUserInfo} from "../pages/user/UserInfo";
+import {CNewGoodForm} from "./admin/NewGoodForm";
 
 const style = {
     position: 'absolute',
@@ -56,6 +57,7 @@ export const ModalWindow = ({modalType, children, width, good}) => {
                     {modalType === 'cart' && <CCartForm handleClose={handleClose}/>}
                     {modalType === 'good' && <CGoodInfoCard handleClose={handleClose} good={good}/>}
                     {modalType === 'user' && <CUserInfo/>}
+                    {modalType === 'edit good' && <CNewGoodForm good={good} isEditing={true}/>}
                 </Box>
             </Modal>
         </div>

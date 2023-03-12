@@ -6,22 +6,32 @@ import {connect} from "react-redux";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import {ModalWindow} from "./Modal";
 
-const GoodCard = (good, addToCart) => {
- const {name, price, description, images, _id, categories} = good
-    // console.log(good)
+const GoodCard = ({name, price, description, images, _id, categories, addToCart, good, login}) => {
+
     return (
         <>
-            {_id && <Card sx={{width: '220px'}} className='card'>
-                {<CardMedia
+            {_id &&
+            <Card sx={{width: '220px'}} className='card'>
+                { login === 'admin' &&
+                    <ModalWindow modalType='edit good' width={700} good={good}>
+                        <Button size="small">Edit</Button>
+                    </ModalWindow>
+                }
+                {
+                    <CardMedia
                     style={{margin: '0 auto'}}
                     component="img"
                     alt="good image"
                     height="140"
                     image={images?.[0]?.url ? backendUrl + images?.[0]?.url : noImage}
-                />}
-                { categories && <Typography variant="body2" color="text.secondary">
-                    {categories?.[0]?.name}
-                </Typography>}
+                />
+                }
+                {
+                    categories &&
+                    <Typography variant="body2" color="text.secondary">
+                        {categories?.[0]?.name}
+                    </Typography>
+                }
                 <CardContent style={{paddingBottom: '0'}}>
                     { <Typography gutterBottom variant="h6" component="div">
                         {name?.slice(0, 30) + '...' || null}
@@ -44,6 +54,8 @@ const GoodCard = (good, addToCart) => {
     );
 };
 
-export const CGoodCard = connect(null, {
+export const CGoodCard = connect((state) => ({
+    login : state?.auth?.payload?.sub?.login
+}), {
     addToCart: actionAddGood
 })(GoodCard);

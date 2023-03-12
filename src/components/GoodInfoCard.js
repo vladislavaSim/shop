@@ -1,15 +1,24 @@
-import React from 'react';
-import {connect} from "react-redux";
+import React, {useEffect} from 'react';
+import {connect, useDispatch} from "react-redux";
 import {Button, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {backendUrl} from "../graphQL/url";
 import noImage from "../images/no-image-icon-23483.png";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import Carousel from 'react-material-ui-carousel'
 import {queryGoodDelete} from "../graphQL/admin/actionGood";
+import {queryAllGoods} from "../graphQL/getGoodsQuery";
 
 const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
     const {name, price, description, images, _id, categories} = good
-    console.log(login)
+    const dispatch = useDispatch()
+    console.log(good)
+
+    // useEffect(() => {
+    //     if(promise?.goodDelete?.status === 'RESOLVED') {
+    //         dispatch(queryAllGoods())
+    //     }
+    // }, [promise])
+
     return (
         <>
             {_id && <div style={{width: '100%'}} className='card'>
@@ -40,8 +49,8 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
                     </Carousel>
                 }
                 <CardContent style={{paddingBottom: '0'}}>
-                    { categories && <Typography gutterBottom variant="h7" component="div">
-                        {categories[0].name}
+                    { categories?.length && <Typography gutterBottom variant="h7" component="div">
+                        {categories?.[0]?.name}
                     </Typography>}
                     { name && <Typography gutterBottom variant="h6" component="div">
                         {name}
@@ -67,6 +76,7 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
 };
 
 export const CGoodInfoCard = connect((state) => ({
+        promise: state?.promise,
         allGoods: state?.promise?.allGoods?.payload,
         goodsByCat: state?.promise?.goodsByCat?.payload?.goods,
         goodsByName: state?.promise?.goodsByName?.payload,
@@ -74,6 +84,7 @@ export const CGoodInfoCard = connect((state) => ({
         login: state?.auth?.payload?.sub?.login
     }),
     {
+
         addToCart: actionAddGood,
         deleteGood: queryGoodDelete
     })

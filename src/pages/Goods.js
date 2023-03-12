@@ -5,16 +5,17 @@ const Goods = ({goods}) => {
     return (
         <div className='card-holder'>
             {
-                goods.map(({_id, name, price, categories, description, images, createdAt}) => {
+                goods.map((good) => {
                     return <CGoodCard
-                                categories={[categories?.[0]]}
-                                key={_id}
-                                name={name}
-                                images={images}
-                                price={price}
-                                description={description}
-                                _id={_id}
-                                createdAt={createdAt}/>
+                                good={good}
+                                categories={[good.categories?.[0]]}
+                                key={good._id}
+                                name={good.name}
+                                images={good.images}
+                                price={good.price}
+                                description={good.description}
+                                _id={good._id}
+                                createdAt={good.createdAt}/>
                 })
             }
         </div>

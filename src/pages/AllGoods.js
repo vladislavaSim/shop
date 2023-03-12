@@ -11,13 +11,6 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
     const [goods, setGoods] = useState(null)
     const [sortedBy, setSortedBy] = useState('old')
 
-    // console.log(goods)
-
-// //initial dispatch to get all goods
-//     useEffect(() => {
-//         dispatch(() => getAll())
-//     }, [])
-
     function sortGoods(value) {
         setSortedBy(value)
         if(value === 'low' || value === 'high') {
