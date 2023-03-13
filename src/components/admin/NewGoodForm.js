@@ -42,21 +42,31 @@ const NewGoodForm = ({onUploadFiles,
     }
 
     useEffect(() => {
+        if(good.categories[0]) {
+            setCategories(allCats.filter(cat => cat.name === good?.categories[0]?.name).map(cat => {
+                return {_id: cat._id, name: cat.name}
+            }))
+        }
+    }, [])
+
+    useEffect(() => {
         if(promise?.uploadFile?.status === 'RESOLVED') {
             const newPics = goodPic.length ? goodPic : [goodPic]
             setImages([...images, ...newPics])
         }
+
     }, [promise])
 
     function makeGoodObj() {
+        const imagesArr = images.map(img => {
+            return {_id: img._id}
+        })
         const obj = {
             name,
             description,
             price: +price,
             categories: [categories] || [],
-            images: images.map(img => {
-                return {_id: img._id}
-            })
+            images: imagesArr || []
         };
         if(good?._id) {
             obj._id = good._id
