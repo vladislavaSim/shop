@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {connect, useDispatch} from "react-redux";
-import {queryAllGoods} from "../graphQL/getGoodsQuery";
-import {Button, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {connect} from "react-redux";
+import ScrollUpButton from "react-scroll-up-button";import {Button, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {CSearch} from "../components/Search";
 import Goods from "./Goods";
 import {store} from "../redux/store";
@@ -64,6 +63,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
            </div>
            <div>
                {goods && <Goods goods={goods}/>}
+               <ScrollUpButton ContainerClassName="MyOverRideClass" />
            </div>
        </>
     );

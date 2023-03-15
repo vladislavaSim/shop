@@ -20,6 +20,7 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
+    "react-scroll-up-button": "^1.6.4",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
     "web-vitals": "^2.1.4"

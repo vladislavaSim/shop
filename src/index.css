@@ -163,5 +163,14 @@ main {
 .preview-box > div {
     position: relative;
 }
+.MyOverRideClass {
+    border-radius: 50%;
+    padding: 5px;
+    border: 5px dashed yellow;
+    background-color: #282c34 !important;
+}
+.MyOverRideClass > svg {
+    fill: yellow !important;
+}
 
 
