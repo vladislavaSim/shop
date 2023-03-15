@@ -42,7 +42,7 @@ export const getGoodsByCat = (name) =>
                       url
                     }
                     categories {
-                        name
+                        name _id
                      }
                 }
               }

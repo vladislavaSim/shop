@@ -6,18 +6,13 @@ import noImage from "../images/no-image-icon-23483.png";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import Carousel from 'react-material-ui-carousel'
 import {queryGoodDelete} from "../graphQL/admin/actionGood";
-import {queryAllGoods} from "../graphQL/getGoodsQuery";
+import {ModalWindow} from "./Modal";
 
 const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
     const {name, price, description, images, _id, categories} = good
-    const dispatch = useDispatch()
-    console.log(good)
 
-    // useEffect(() => {
-    //     if(promise?.goodDelete?.status === 'RESOLVED') {
-    //         dispatch(queryAllGoods())
-    //     }
-    // }, [promise])
+    console.log(good)
+    console.log(_id + ' INFO CARD')
 
     return (
         <>
@@ -69,6 +64,11 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
                     </Button>
                     }
                     <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
+                    { login === 'admin' &&
+                    <ModalWindow modalType='edit good' width={700} good={good}>
+                        <Button size="small">Edit</Button>
+                    </ModalWindow>
+                    }
                 </CardActions>
             </div>}
         </>
@@ -77,15 +77,10 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
 
 export const CGoodInfoCard = connect((state) => ({
         promise: state?.promise,
-        allGoods: state?.promise?.allGoods?.payload,
-        goodsByCat: state?.promise?.goodsByCat?.payload?.goods,
-        goodsByName: state?.promise?.goodsByName?.payload,
-        cart: state?.cart,
         login: state?.auth?.payload?.sub?.login
     }),
     {
-
         addToCart: actionAddGood,
-        deleteGood: queryGoodDelete
+        deleteGood: queryGoodDelete,
     })
 (GoodInfoCard)

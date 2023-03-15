@@ -10,7 +10,7 @@ export const queryAllGoods = () => {
               url
             }
             categories {
-                name
+                name _id
             }
           }
         }`)
@@ -26,7 +26,7 @@ export const queryGoodsByName = (name) =>
                     _id url
                  }
                  categories {
-                     name
+                     name _id
                  }
           }
         }`,
@@ -36,3 +36,4 @@ export const queryGoodsByName = (name) =>
       )
     await dispatch(promise)
 }
+

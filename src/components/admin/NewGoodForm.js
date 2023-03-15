@@ -7,6 +7,7 @@ import {actionFilesUpload, actionFileUpload} from "../../redux/actions/actionFil
 import {useNavigate} from "react-router";
 import {clearPromiseByName} from "../../redux/actions/actionsPromise";
 import ImagePreview from "./ImagePreview";
+import {store} from "../../redux/store";
 
 const NewGoodForm = ({onUploadFiles,
                          onUploadFile,
@@ -20,12 +21,14 @@ const NewGoodForm = ({onUploadFiles,
     const [name, setName] = useState(good?.name || '')
     const [description, setDescription] = useState(good?.description || '')
     const [price, setPrice] = useState(good?.price || '')
-    const [categories, setCategories] = useState()
+    const [categories, setCategories] = useState(good?.categories || [])
     const [images, setImages] = useState(good?.images || [])
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log(good)
+
+    console.log(store.getState())
+
     useEffect(() => {
         if(promise?.goodUpsert?.status === 'RESOLVED') {
             navigate('/')
@@ -42,14 +45,6 @@ const NewGoodForm = ({onUploadFiles,
     }
 
     useEffect(() => {
-        if(good.categories[0]) {
-            setCategories(allCats.filter(cat => cat.name === good?.categories[0]?.name).map(cat => {
-                return {_id: cat._id, name: cat.name}
-            }))
-        }
-    }, [])
-
-    useEffect(() => {
         if(promise?.uploadFile?.status === 'RESOLVED') {
             const newPics = goodPic.length ? goodPic : [goodPic]
             setImages([...images, ...newPics])
@@ -61,24 +56,24 @@ const NewGoodForm = ({onUploadFiles,
         const imagesArr = images.map(img => {
             return {_id: img._id}
         })
+
         const obj = {
             name,
             description,
             price: +price,
-            categories: [categories] || [],
+            categories: categories,
             images: imagesArr || []
         };
         if(good?._id) {
             obj._id = good._id
         }
+        console.log(description)
         return obj
     }
 
-    console.log(makeGoodObj())
 
-    console.log(good?.categories[0])
     function onUploadFunc(files) {
-        if(files) {
+        if (files) {
             files.length > 1 ? onUploadFiles(files) : onUploadFile(files[0])
         }
     }

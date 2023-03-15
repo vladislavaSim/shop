@@ -2,21 +2,17 @@ import React from 'react';
 import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {backendUrl} from "../graphQL/url";
 import noImage from "../images/no-image-icon-23483.png"
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import {ModalWindow} from "./Modal";
+import {queryGoodById} from "../graphQL/getGoodsQuery";
 
-const GoodCard = ({name, price, description, images, _id, categories, addToCart, good, login}) => {
+const GoodCard = ({name, price, description, images, _id, categories, addToCart, good}) => {
 
     return (
         <>
             {_id &&
             <Card sx={{width: '220px'}} className='card'>
-                { login === 'admin' &&
-                    <ModalWindow modalType='edit good' width={700} good={good}>
-                        <Button size="small">Edit</Button>
-                    </ModalWindow>
-                }
                 {
                     <CardMedia
                     style={{margin: '0 auto'}}
@@ -34,10 +30,10 @@ const GoodCard = ({name, price, description, images, _id, categories, addToCart,
                 }
                 <CardContent style={{paddingBottom: '0'}}>
                     { <Typography gutterBottom variant="h6" component="div">
-                        {name?.slice(0, 30) + '...' || null}
+                        {name?.slice(0, 30) }
                     </Typography>}
                     { <Typography variant="body2" color="text.secondary">
-                        {description?.slice(0, 70) + '...' || null}
+                        {description?.slice(0, 70)}
                     </Typography>}
                     {<Typography gutterBottom variant="h7" component="div">
                         {price + ' UAH' || null}
@@ -54,8 +50,6 @@ const GoodCard = ({name, price, description, images, _id, categories, addToCart,
     );
 };
 
-export const CGoodCard = connect((state) => ({
-    login : state?.auth?.payload?.sub?.login
-}), {
+export const CGoodCard = connect(null, {
     addToCart: actionAddGood
 })(GoodCard);
