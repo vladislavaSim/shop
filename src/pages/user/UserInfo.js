@@ -24,9 +24,9 @@ const UserInfo = ({myId, userById, user, queryOrdersByUser, myOrders}) => {
                 { user.login && <Typography gutterBottom variant="h6" component="div">
                     {user.login}
                 </Typography>}
-                { user.id && <Typography variant="body2" color="text.secondary">
-                    {'id: ' + user.id}
-                </Typography>}
+                {/*{ user.id && <Typography variant="body2" color="text.secondary">*/}
+                {/*    {'id: ' + user.id}*/}
+                {/*</Typography>}*/}
                 <h5>My orders:
                     {myOrders && <OrdersList orders={myOrders}/>}
                 </h5>

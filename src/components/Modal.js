@@ -13,10 +13,12 @@ import {CNewGoodForm} from "./admin/NewGoodForm";
 
 const style = {
     position: 'absolute',
+    height: '80vh',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    // width: 400,
     bgcolor: 'background.paper',
     minHeight: '200px',
     boxShadow: 24,
@@ -31,35 +33,41 @@ export const ModalWindow = ({modalType, children, width, good}) => {
     const handleClose = () => setOpen(false);
 
     return (
-        <div className='modal-box'>
-            <div
-                className='modal-btn'
-                onClick={handleOpen}>
-                {children || modalType}
+        <>
+            <div className='modal-box'>
+                <div
+                    className='modal-btn'
+                    onClick={handleOpen}>
+                    {children || modalType}
+                </div>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <div>
+                        <div id='closing-btn'>
+                            <IconButton
+                                size='large'
+                                id='closing_btn'
+                                onClick={handleClose}>
+                                <HighlightOffIcon/>
+                            </IconButton>
+                        </div>
+                        <Box sx={style} width={width}>
+
+                            {modalType === 'log in' && <CLoginForm handleClose={handleClose}/>}
+                            {modalType === 'sign in' && <CRegistrationForm handleClose={handleClose}/>}
+                            {modalType === 'cart' && <CCartForm handleClose={handleClose}/>}
+                            {modalType === 'good' && <CGoodInfoCard handleClose={handleClose} good={good}/>}
+                            {modalType === 'user' && <CUserInfo/>}
+                            {modalType === 'edit good' && <CNewGoodForm good={good} isEditing={true}/>}
+                        </Box>
+                    </div>
+
+                </Modal>
             </div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style} width={width}>
-                   <div id='closing-btn'>
-                       <IconButton
-                           size='large'
-                           id='closing_btn'
-                           onClick={handleClose}>
-                           <HighlightOffIcon/>
-                       </IconButton>
-                   </div>
-                    {modalType === 'log in' && <CLoginForm handleClose={handleClose}/>}
-                    {modalType === 'sign in' && <CRegistrationForm handleClose={handleClose}/>}
-                    {modalType === 'cart' && <CCartForm handleClose={handleClose}/>}
-                    {modalType === 'good' && <CGoodInfoCard handleClose={handleClose} good={good}/>}
-                    {modalType === 'user' && <CUserInfo/>}
-                    {modalType === 'edit good' && <CNewGoodForm good={good} isEditing={true}/>}
-                </Box>
-            </Modal>
-        </div>
+        </>
     );
 }

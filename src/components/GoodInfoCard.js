@@ -50,26 +50,26 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
                     { name && <Typography gutterBottom variant="h6" component="div">
                         {name}
                     </Typography>}
-                    { description && <Typography variant="body2" color="text.secondary">
-                        {description}
-                    </Typography>}
                     { price && <Typography gutterBottom variant="h7" component="div">
                         {price + ' UAH'}
                     </Typography>}
+                    <CardActions>
+                        {<Button size="small"
+                                 onClick={() => deleteGood({_id, name: name || null})}>
+                            DELETE
+                        </Button>
+                        }
+                        <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
+                        { login === 'admin' &&
+                        <ModalWindow modalType='edit good' width={700} good={good}>
+                            <Button size="small">Edit</Button>
+                        </ModalWindow>
+                        }
+                    </CardActions>
+                    { description && <Typography variant="body2" color="text.secondary">
+                        {description}
+                    </Typography>}
                 </CardContent>
-                <CardActions>
-                    {<Button size="small"
-                               onClick={() => deleteGood({_id, name: name || null})}>
-                        DELETE
-                    </Button>
-                    }
-                    <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
-                    { login === 'admin' &&
-                    <ModalWindow modalType='edit good' width={700} good={good}>
-                        <Button size="small">Edit</Button>
-                    </ModalWindow>
-                    }
-                </CardActions>
             </div>}
         </>
     );

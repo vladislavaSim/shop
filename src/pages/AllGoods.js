@@ -42,6 +42,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>
 
                    <Select
+                       size='small'
                        labelId="demo-simple-select-label"
                        id="demo-simple-select"
                        value={sortedBy}
