@@ -7,7 +7,7 @@ import {actionCategoryUpsert, queryCatDelete} from "../../graphQL/admin/actionCa
 import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
 
-const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat}) => {
+const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll}) => {
     const [isEdit, setIsEdit] = useState(false)
     const [newCat, setNewCat] = useState('')
 
@@ -46,6 +46,12 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat}) => {
                 </div>
             }
             <ul>
+                <li
+                    style={{fontWeight: "600"}}
+                    className='cats_item'
+                    onClick={() => dispatch(() => getAll())}>
+                       • All
+                </li>
                 { categories &&
                 categories.map(({_id, name}) => {
                     return <li
@@ -65,6 +71,7 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat}) => {
                                 </Link>
                             </li>
                 })
+
                 }
             </ul>
         </aside>
@@ -74,7 +81,8 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat}) => {
 export const CSideMenu = connect((state) => ({
     categories: state?.promise?.allCats?.payload,
     promise: state?.promise,
-    login: state?.auth?.payload?.sub?.login
+    login: state?.auth?.payload?.sub?.login,
+    allGoods: state?.promise?.allGoods?.payload
 }), {
     getCats: getCatsQuery,
     getGoodsByCat: getGoodsByCat,
