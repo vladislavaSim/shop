@@ -31,7 +31,7 @@ const CartForm = ({cart, clearAll, makeOrder, newOrder, handleClose}) => {
 
     return (
         <div className='cart-box'>
-            <h4>Cart</h4>
+            <h1>Cart</h1>
             {goods && goods.map(({good, count}) => {
                     return <CCartItem good={good} count={count} key={Math.random() * 10000}/>
                 })
@@ -53,7 +53,7 @@ const CartForm = ({cart, clearAll, makeOrder, newOrder, handleClose}) => {
                         clear all
                     </Button>
                 </div>
-                : <h4>Let's order something</h4>}
+                : <h2>Let's order something! :)</h2>}
         </div>
     );
 };

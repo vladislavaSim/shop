@@ -23,6 +23,7 @@ const Search = ({onGetGoods, goodsByName}) => {
     return (
         <div>
             <TextField
+                size="small"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 id="outlined-basic" label="Search goods" variant="outlined" />

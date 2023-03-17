@@ -16,6 +16,7 @@ const LoginForm = ({doLogin, isLogged, doLogout, handleClose}) => {
     return (
         <>
            <div className='login-form'>
+               <h3>Please, log in</h3>
                <TextField
                    required
                    id="outlined-required"

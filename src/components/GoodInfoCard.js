@@ -54,16 +54,17 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
                         {price + ' UAH'}
                     </Typography>}
                     <CardActions>
-                        {<Button size="small"
-                                 onClick={() => deleteGood({_id, name: name || null})}>
-                            DELETE
-                        </Button>
-                        }
                         <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
                         { login === 'admin' &&
-                        <ModalWindow modalType='edit good' width={700} good={good}>
-                            <Button size="small">Edit</Button>
-                        </ModalWindow>
+                        <div>
+                            <Button size="small"
+                                    onClick={() => deleteGood({_id, name: name || null})}>
+                                DELETE
+                            </Button>
+                            <ModalWindow modalType='edit good' width={700} good={good}>
+                                <Button size="small">Edit</Button>
+                            </ModalWindow>
+                        </div>
                         }
                     </CardActions>
                     { description && <Typography variant="body2" color="text.secondary">

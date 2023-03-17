@@ -18,8 +18,9 @@ const Registration = ({doRegister, isLogged, handleClose}) => {
 
     console.log(store.getState())
     return (
-        <div>
+        <>
             <div className='login-form'>
+                <h3>Please, sign up</h3>
                 <TextField
                     required
                     id="outlined-required"
@@ -42,7 +43,7 @@ const Registration = ({doRegister, isLogged, handleClose}) => {
                     Create an account
                 </Button>
             </div>
-        </div>
+        </>
     );
 };
 

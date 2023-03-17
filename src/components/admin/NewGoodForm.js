@@ -78,6 +78,7 @@ const NewGoodForm = ({onUploadFiles,
         }
     }
 
+    console.log(makeGoodObj())
     return (
         <div className='admin-form'>
             <div className='preview-box'>
@@ -134,6 +135,7 @@ const NewGoodForm = ({onUploadFiles,
                 ))}
             </TextField>
             <Button
+                disabled={!name || !price || !categories}
                 variant="contained"
                 color='success'
                 onClick={() => addNewGood(makeGoodObj())}>

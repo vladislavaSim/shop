@@ -59,8 +59,8 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
 
                <Button onClick={() => setGoods(allGoods)}
                        color="error"
-                       size={'small'}
-                       variant="outlined">Reset filters</Button>
+                       size="small"
+                       variant="outlined">Reset</Button>
            </div>
            <div>
                {goods && <Goods goods={goods}/>}

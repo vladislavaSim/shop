@@ -46,9 +46,11 @@ const Header = ({login, doLogout, cart}) => {
             </div>
             {
                 login === 'admin'
-            && <Link to='/createNewGood'>
-                create a good
-            </Link>
+            && <Button variant="contained">
+                    <Link to='/createNewGood' style={{color: "white"}}>
+                         create a good
+                    </Link>
+                </Button>
             }
             <div className='header-box'>
                 {!login

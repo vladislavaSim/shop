@@ -58,7 +58,7 @@ export const ModalWindow = ({modalType, children, width, good}) => {
                         <Box sx={style} width={width}>
 
                             {modalType === 'log in' && <CLoginForm handleClose={handleClose}/>}
-                            {modalType === 'sign in' && <CRegistrationForm handleClose={handleClose}/>}
+                            {modalType === 'sign up' && <CRegistrationForm handleClose={handleClose}/>}
                             {modalType === 'cart' && <CCartForm handleClose={handleClose}/>}
                             {modalType === 'good' && <CGoodInfoCard handleClose={handleClose} good={good}/>}
                             {modalType === 'user' && <CUserInfo/>}
