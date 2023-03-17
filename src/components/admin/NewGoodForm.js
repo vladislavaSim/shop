@@ -78,6 +78,13 @@ const NewGoodForm = ({onUploadFiles,
         }
     }
 
+    function clearAll() {
+        clearAllImages()
+        setName('')
+        setDescription('')
+        setPrice('')
+        setCategories(null)
+    }
     console.log(makeGoodObj())
     return (
         <div className='admin-form'>
@@ -92,13 +99,19 @@ const NewGoodForm = ({onUploadFiles,
                     variant='filled'
                     color='error'
                     onClick={() => clearAllImages()}>
-                    Clear
+                    remove images
                 </Button>}
                 <input
                     multiple={true}
                     onChange={(e) => onUploadFunc(e.target.files)}
                     type="file"
                 />
+                <Button
+                    variant="contained"
+                    color='error'
+                    onClick={() => clearAll()}>
+                    clear
+                </Button>
             </div>
             <TextField
                 required
@@ -135,7 +148,7 @@ const NewGoodForm = ({onUploadFiles,
                 ))}
             </TextField>
             <Button
-                disabled={!name || !price || !categories}
+                disabled={!name || !price || !categories.name}
                 variant="contained"
                 color='success'
                 onClick={() => addNewGood(makeGoodObj())}>
