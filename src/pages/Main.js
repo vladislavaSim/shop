@@ -3,8 +3,6 @@ import {CAllGoods} from "./AllGoods";
 import {CSideMenu} from "./login/SideMenu";
 import {Route, Routes} from "react-router";
 import {CNewGoodForm} from "../components/admin/NewGoodForm";
-import {useDispatch} from "react-redux";
-import {queryAllGoods} from "../graphQL/getGoodsQuery";
 
 const Main = () => {
 

@@ -15,6 +15,7 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll})
 
     return (
         <aside className='side-menu'>
+            <ul>
             {login === 'admin' &&
             <Button
                 onClick={() => setIsEdit(!isEdit)}
@@ -45,7 +46,6 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll})
                     </Button>
                 </div>
             }
-            <ul>
                 <li
                     style={{fontWeight: "600"}}
                     className='cats_item'

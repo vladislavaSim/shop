@@ -7,19 +7,25 @@ const useDebounce = (cb, depArray, delay) => {
     let timeoutRef = useRef()
 
     useEffect(() => {
-        clearInterval(timeoutRef.current)
-        timeoutRef.current === undefined ? timeoutRef.current = -1 : timeoutRef.current = setTimeout(cb, delay)
+        if(depArray[0]) {
+            clearInterval(timeoutRef.current)
+            timeoutRef.current === undefined ? timeoutRef.current = -1 : timeoutRef.current = setTimeout(cb, delay)
+        }
     }, depArray)
+
 };
 
-
-const Search = ({onGetGoods, goodsByName}) => {
+const Search = ({onGetGoods, promise}) => {
     const [name, setName] = useState('')
 
     useDebounce( () => onGetGoods(name), [name], 2000);
+
     useEffect(() => {
-        setName('')
-    }, [goodsByName])
+        if(promise?.goodsByName?.status === 'RESOLVED') {
+            setName('')
+        }
+    }, [promise])
+
     return (
         <div>
             <TextField
@@ -32,6 +38,7 @@ const Search = ({onGetGoods, goodsByName}) => {
 };
 
 export const CSearch = connect((state) => ({
+    promise: state?.promise,
     goodsByName: state?.promise?.goodsByName?.payload
 }), {
     onGetGoods: queryGoodsByName
