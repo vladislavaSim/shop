@@ -36,4 +36,23 @@ export const queryGoodsByName = (name) =>
       )
     await dispatch(promise)
 }
+export const actionGoodById = (_id) =>
+    actionPromise(
+        'goodById',
+        gql(
+            `query GoodById($q:String){
+            GoodFindOne(query: $q){
+                _id name description price 
+                categories{
+                    _id name
+                }
+                images{
+                    _id
+                    url
+                }
+            }
+        }`,
+            { q: JSON.stringify([{ _id }]) }
+        )
 
+    );

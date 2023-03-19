@@ -8,6 +8,8 @@ import {useNavigate} from "react-router";
 import {clearPromiseByName} from "../../redux/actions/actionsPromise";
 import ImagePreview from "./ImagePreview";
 import {store} from "../../redux/store";
+import {actionGoodById} from "../../graphQL/getGoodsQuery";
+import {getCatsQuery} from "../../graphQL/getCats";
 
 const NewGoodForm = ({onUploadFiles,
                          onUploadFile,
@@ -15,6 +17,7 @@ const NewGoodForm = ({onUploadFiles,
                          addNewGood,
                          allCats,
                          promise,
+                         getCats,
                          good,
                          isEditing}) => {
 
@@ -28,6 +31,14 @@ const NewGoodForm = ({onUploadFiles,
     const navigate = useNavigate()
 
     console.log(store.getState())
+
+    useEffect(() => {
+        console.log(11)
+        getCats()
+        return () => {
+            navigate('/')
+        }
+    }, [])
 
     useEffect(() => {
         if(promise?.goodUpsert?.status === 'RESOLVED') {
@@ -141,7 +152,7 @@ const NewGoodForm = ({onUploadFiles,
                 defaultValue={good && good?.categories && good?.categories[0]?.name || "Smartphone"}
                 helperText="Please select the category"
                 onChange={(e, newValue) => setCategories({name: e.target.value, _id: newValue.key.substring(2, newValue.key.length)})}>
-                {allCats.map((cat) => (
+                {allCats && allCats.map((cat) => (
                     <MenuItem key={cat._id} value={cat.name}>
                         {cat.name}
                     </MenuItem>
@@ -164,6 +175,7 @@ export const CNewGoodForm = connect((state) => ({
     goodPic: state?.promise?.uploadFile?.payload,
 }), {
     addNewGood: actionGoodUpsert,
+    getCats: getCatsQuery,
     onUploadFile: actionFileUpload,
     onUploadFiles: actionFilesUpload
 })(NewGoodForm);

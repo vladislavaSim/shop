@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, TextField} from "@mui/material";
 import {connect} from "react-redux";
 import {actionLogout, fullAuthLogin} from "../../redux/actions/actionsAuth";
-import {store} from "../../redux/store";
 
 const LoginForm = ({doLogin, isLogged, storeLogin, handleClose}) => {
     const [login, setLogin] = useState('')
@@ -13,8 +12,7 @@ const LoginForm = ({doLogin, isLogged, storeLogin, handleClose}) => {
             handleClose()
         }
     }, [isLogged])
-    console.log(store.getState())
-    console.log(storeLogin)
+
     return (
         <>
            <div className='login-form'>
