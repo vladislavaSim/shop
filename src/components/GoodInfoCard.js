@@ -19,11 +19,9 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
             {_id && <div style={{width: '100%'}} className='card'>
                 {images?.length === 1 ?
                     <CardMedia
-                        style={{margin: '0 auto'}}
+                        style={{margin: '0 auto', height: '200px', width: 'auto'}}
                         component="img"
                         alt="good image"
-                        height="auto"
-                        width='30%'
                         image={images?.[0]?.url ? backendUrl + images?.[0]?.url : noImage}
                     /> :
                     <Carousel
@@ -53,10 +51,10 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
                     { price && <Typography gutterBottom variant="h7" component="div">
                         {price + ' UAH'}
                     </Typography>}
-                    <CardActions>
+                    <CardActions style={{justifyContent: "space-around"}}>
                         <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
                         { login === 'admin' &&
-                        <div>
+                        <>
                             <Button size="small"
                                     onClick={() => deleteGood({_id, name: name || null})}>
                                 DELETE
@@ -64,7 +62,7 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
                             <ModalWindow modalType='edit good' width={700} good={good}>
                                 <Button size="small">Edit</Button>
                             </ModalWindow>
-                        </div>
+                        </>
                         }
                     </CardActions>
                     { description && <Typography variant="body2" color="text.secondary">

@@ -2,20 +2,19 @@ import React from 'react';
 import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {backendUrl} from "../graphQL/url";
 import noImage from "../images/no-image-icon-23483.png"
-import {connect, useDispatch} from "react-redux";
+import {connect} from "react-redux";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import {ModalWindow} from "./Modal";
-import {queryGoodById} from "../graphQL/getGoodsQuery";
 
 const GoodCard = ({name, price, description, images, _id, categories, addToCart, good}) => {
 
     return (
         <>
             {_id &&
-            <Card sx={{width: '220px'}} className='card'>
+            <Card sx={{width: '220px'}} className='card' className='good-card'>
                 {
                     <CardMedia
-                    style={{margin: '0 auto'}}
+                    style={{margin: '0 auto', width: 'auto'}}
                     component="img"
                     alt="good image"
                     height="140"
@@ -24,7 +23,7 @@ const GoodCard = ({name, price, description, images, _id, categories, addToCart,
                 }
                 {
                     categories &&
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" style={{margin: '10px 10px 0'}}>
                         {categories?.[0]?.name}
                     </Typography>
                 }

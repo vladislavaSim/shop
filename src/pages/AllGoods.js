@@ -36,7 +36,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
 
     console.log(store.getState())
     return (
-       <>
+       <div style={{margin: '0 auto', width: '80%'}}>
            <div className='inputs-box'>
                <FormControl fullWidth style={{width: '300px'}}>
                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>
@@ -66,7 +66,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
                {goods && <Goods goods={goods}/>}
                <ScrollUpButton ContainerClassName="MyOverRideClass" />
            </div>
-       </>
+       </div>
     );
 };
 

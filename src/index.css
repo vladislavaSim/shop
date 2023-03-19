@@ -1,5 +1,6 @@
 * {
     font-family: 'Raleway', sans-serif;
+    box-sizing: border-box;
 }
 body {
     background-color: aliceblue;
@@ -18,7 +19,6 @@ header, footer{
     background-color: #282c34;
 }
 header {
-    width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -28,11 +28,7 @@ header {
     top: 0;
 }
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 80%;
-    margin: 0 auto;
     padding: 20px 10px;
 }
 .logo {
@@ -60,11 +56,8 @@ header {
     align-items: center;
 }
 main {
-    /*width: 80%;*/
     display: flex;
     background-color: white;
-    /*margin: 0 auto;*/
-    /*height: 80vh;*/
 }
 .side-menu {
     padding: 10px;
@@ -90,9 +83,13 @@ main {
     flex-wrap: wrap;
     justify-content: space-around;
 }
-.card {
+.good-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-bottom: 10px;
     margin-right: 5px;
+    padding: 0 5px;
 }
 .inputs-box {
     padding: 20px 20%;
@@ -146,7 +143,6 @@ main {
     justify-content: space-around;
 }
 .admin-form {
-    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -154,9 +150,9 @@ main {
 .admin-form > div {
     margin-bottom: 25px;
 }
-.css-o69gx8-MuiCardMedia-root {
-    width: 50% !important;
-}
+/*.css-o69gx8-MuiCardMedia-root {*/
+/*    width: 50% !important;*/
+/*}*/
 .cat-editing-box {
     margin: 20px 10px;
 }
@@ -184,5 +180,6 @@ main {
 .MyOverRideClass > svg {
     fill: yellow !important;
 }
+
 
 
