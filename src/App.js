@@ -1,5 +1,5 @@
 import './App.css';
-import Main from "./pages/Main";
+import {CMain} from "./pages/Main";
 import {CHeader} from "./pages/Header";
 import {BrowserRouter} from "react-router-dom";
 import {connect, useDispatch} from "react-redux";
@@ -19,7 +19,7 @@ function App({getAll, getCats}) {
    <BrowserRouter>
        <div className="App">
            <CHeader/>
-           <Main/>
+           <CMain/>
        </div>
    </BrowserRouter>
   );

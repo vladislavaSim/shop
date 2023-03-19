@@ -6,13 +6,15 @@ import {Link} from "react-router-dom";
 import {actionCategoryUpsert, queryCatDelete} from "../../graphQL/admin/actionCategory";
 import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
+import {useLocation} from "react-router";
 
 const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll}) => {
     const [isEdit, setIsEdit] = useState(false)
     const [newCat, setNewCat] = useState('')
 
     const dispatch = useDispatch()
-
+    const location = useLocation()
+    console.log(location.pathname)
     return (
         <aside className='side-menu'>
             <ul>
@@ -54,6 +56,7 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll})
                 </li>
                 { categories &&
                 categories.map(({_id, name}) => {
+                    // console.log('/' + name.toLowerCase().split(' ').join('_'))
                     return <li
                                 className='cats_item'
                                 key={_id}
@@ -66,14 +69,15 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll})
                                 onClick={() => removeCat({_id, name})}>x
                             </Button>
                         }
-                        <Link to='/' className='cats_item'>
+                        <Link
+                            to={'/' + name.toLowerCase().replace(/\s+/g, '_')} //regex for replacing %20 by _ in a pathname
+                            className='cats_item'>
                                     {name}
-                                </Link>
-                            </li>
+                        </Link>
+                    </li>
                 })
-
-                }
-            </ul>
+            }
+          </ul>
         </aside>
     );
 };

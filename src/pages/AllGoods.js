@@ -6,9 +6,10 @@ import Goods from "./Goods";
 import {store} from "../redux/store";
 
 
-const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName, cart}) => {
+const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
     const [goods, setGoods] = useState(null)
     const [sortedBy, setSortedBy] = useState('old')
+
 
     function sortGoods(value) {
         setSortedBy(value)
