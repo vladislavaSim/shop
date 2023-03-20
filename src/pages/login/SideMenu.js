@@ -9,19 +9,25 @@ import {TextField} from "@mui/material";
 import {useLocation} from "react-router";
 import {CEditCategory} from "../../graphQL/admin/EditCategory";
 import {CCategory} from "../../graphQL/admin/Category";
+import {store} from "../../redux/store";
+import {clearPromiseByName} from "../../redux/actions/actionsPromise";
 
-const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, getCatById}) => {
+const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, getCatById, promise, getCats}) => {
     const [isEdit, setIsEdit] = useState(false)
-    const [newCat, setNewCat] = useState('')
-    const [isEditCatName, setIsEditCatName] = useState(false)
 
     const dispatch = useDispatch()
-    function editCatName(_id) {
-        setIsEditCatName(true)
-        getCatById(_id)
-    }
 
-    console.log(isEditCatName)
+    useEffect(() => {
+        if(promise?.categoryUpsert?.status === 'RESOLVED') {
+            console.log('cat upserted!!!')
+            setIsEdit(false)
+            dispatch(clearPromiseByName('categoryUpsert'))
+            dispatch(() => getAll())
+            dispatch(() => getCats())
+        }
+    }, [promise])
+
+
     return (
         <aside className='side-menu'>
             <ul>

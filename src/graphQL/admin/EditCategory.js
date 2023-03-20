@@ -6,19 +6,22 @@ import {connect} from "react-redux";
 import {actionCatById} from "../getCats";
 import {store} from "../../redux/store";
 
-const EditCategory = ({isEditCatName, cat, catOldName, addCat}) => {
+const EditCategory = ({isEditCatName, cat, addCat}) => {
     const [editedName, setEditedName] = useState('')
+
 
     useEffect(() => {
        setEditedName(cat?.name)
     }, [cat])
 
-    console.log(cat?._id)
-    console.log(store.getState())
+
+
+    console.log(editedName)
+    // console.log(store.getState())
     return (
         <>
             {
-                isEditCatName &&
+                cat &&
                 <div className='cat-editing-box'>
                     <TextField
                         size={'small'}
