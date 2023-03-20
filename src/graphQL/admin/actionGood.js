@@ -3,7 +3,6 @@ import {gql} from "../getgql";
 
 export const queryGoodUpsert = (good) => {
     console.log(good)
-    console.log('GOOD UPSERT!!!!!')
     return actionPromise('goodUpsert',
         gql(`mutation addNewGood($good: GoodInput!){
               GoodUpsert(good: $good) {

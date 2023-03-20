@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
-import ScrollUpButton from "react-scroll-up-button";import {Button, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {connect, useDispatch} from "react-redux";
+import ScrollUpButton from "react-scroll-up-button";
+import {Button, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {CSearch} from "../components/Search";
 import Goods from "./Goods";
 import {store} from "../redux/store";
+import {getGoodsByCat} from "../graphQL/getCats";
+import {useLocation} from "react-router";
 
 
 const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
     const [goods, setGoods] = useState(null)
     const [sortedBy, setSortedBy] = useState('old')
 
+    const dispatch = useDispatch()
+    const location = useLocation()
 
     function sortGoods(value) {
         setSortedBy(value)
@@ -25,6 +30,11 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
     useEffect(() => {
        setGoods(goodsByCat)
     }, [goodsByCat])
+
+    useEffect(() => {
+        console.log(location.pathname)
+        dispatch(() => getGoodsByCat(location.pathname.slice(1, location.pathname.length)))
+    }, [])
 
 //initial all goods show
     useEffect(() => {
@@ -77,5 +87,7 @@ export const CAllGoods = connect((state) => ({
     goodsByName: state?.promise?.goodsByName?.payload,
     cart: state?.cart
 }),
-    null)
+    {
+        getGoodsByCat: getGoodsByCat
+    })
 (AllGoods)

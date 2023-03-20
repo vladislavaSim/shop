@@ -12,27 +12,27 @@ export const getCatsQuery = () => {
             }`)
         )
 }
-// export const getGoodsByCat = (name) => {
-//     console.log(name)
-//     return actionPromise('goodsByCat',
-//         gql(`query GoodsByCat($name: String){
-//               CategoryFindOne(query: $name) {
-//                 name goods{
-//                   _id, name, price, createdAt, description, images {
-//                       _id
-//                       url
-//                     }
-//                     categories {
-//                         name
-//                      }
-//                 }
-//               }
-//             }`, {name: JSON.stringify([{name: `/${name}/`}])})
-//     )
-// }
+export const actionCatById = (_id) =>
+    actionPromise(
+        'catById',
+        gql(
+            `query CatById($q:String){
+            CategoryFindOne(query: $q){
+                _id name  
+                goods{
+                    _id name description price
+                }
+            }
+        }`,
+            { q: JSON.stringify([{ _id }]) }
+        )
+
+    );
+
 
 export const getGoodsByCat = (name) =>
     async (dispatch) => {
+        console.log(name)
         let promise = await actionPromise('goodsByCat',
             gql(`query GoodsByCat($name: String){
               CategoryFindOne(query: $name) {

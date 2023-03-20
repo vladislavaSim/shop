@@ -22,7 +22,6 @@ export const actionCategoryUpsert = (category) => {
     )
 }
 export const queryCatDelete = (category) => {
-    console.log(category)
     return actionPromise('goodDelete',
         gql(`mutation removeCat($category: CategoryInput!){
              CategoryDelete(category:$category){
