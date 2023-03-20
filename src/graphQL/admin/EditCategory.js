@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {actionCatById} from "../getCats";
 import {store} from "../../redux/store";
 
-const EditCategory = ({isEditCatName, cat, addCat}) => {
+const EditCategory = ({cat, addCat}) => {
     const [editedName, setEditedName] = useState('')
 
 
@@ -28,7 +28,7 @@ const EditCategory = ({isEditCatName, cat, addCat}) => {
                         required
                         id="outlined-required"
                         onChange={(e) => setEditedName(e.target.value)}
-                        value={editedName}
+                        value={editedName || ''}
                     />
                     <Button
                         style={{padding: 0}}

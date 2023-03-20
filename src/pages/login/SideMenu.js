@@ -14,6 +14,7 @@ import {clearPromiseByName} from "../../redux/actions/actionsPromise";
 
 const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, getCatById, promise, getCats}) => {
     const [isEdit, setIsEdit] = useState(false)
+    const [newCatName, setNewCatName] = useState('')
 
     const dispatch = useDispatch()
 
@@ -46,6 +47,26 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, 
                     onClick={() => dispatch(() => getAll())}>
                        • All
                 </li>
+                {
+                    isEdit &&
+                    <div className='cat-editing-box'>
+                        <TextField
+                            size={'small'}
+                            required
+                            id="outlined-required"
+                            onChange={(e) => setNewCatName(e.target.value)}
+                            value={newCatName}
+                        />
+                        <Button
+                            onClick={() => addCat({name: newCatName})}
+                            size='small'
+                            color='success'
+                            disabled={!newCatName}
+                            variant="contained">
+                            Add category
+                        </Button>
+                    </div>
+                }
 
                 { categories &&
                 categories.map(({_id, name}) => {
