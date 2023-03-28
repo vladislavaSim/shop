@@ -7,11 +7,11 @@ import {actionCatById, getGoodsByCat} from "../getCats";
 import {store} from "../../redux/store";
 import {clearPromiseByName} from "../../redux/actions/actionsPromise";
 
-const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise}) => {
+const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise, removeCat}) => {
     const [isEditCatName, setIsEditCatName] = useState(false)
 
-    console.log(store.getState())
     const dispatch = useDispatch()
+// console.log(isEdit);
 
     function editCatName(_id) {
         setIsEditCatName(true)
@@ -23,6 +23,18 @@ const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise}) => {
             dispatch(clearPromiseByName('categoryUpsert'))
         }
     }, [promise])
+
+    function getLinkOrCatName() {
+        if(isEdit) {
+            return <div className='cats_item'>{name}</div>
+        } else {
+            return <Link
+                        to={'/' + name.toLowerCase().replace(/\s+/g, '_')} //regex for replacing %20 by _ in a pathname
+                        className='cats_item'>
+                            {name}
+                    </Link>
+        }
+    }
     return (
         <>
             <li
@@ -37,12 +49,12 @@ const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise}) => {
                     variant="contained"
                     onClick={() => editCatName(_id)}>rename
                 </Button>
-                {/*<Button*/}
-                {/*    size='small'*/}
-                {/*    color='error'*/}
-                {/*    variant="contained"*/}
-                {/*    onClick={() => removeCat({_id, name})}>x*/}
-                {/*</Button>*/}
+                <Button
+                   size='small'
+                   color='error'
+                   variant="contained"
+                   onClick={() => removeCat({_id, name})}>x
+                </Button>
 
             </>
             }
@@ -51,11 +63,7 @@ const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise}) => {
                      ?
                     <CEditCategory isEditCatName={isEditCatName}/>
                     :
-                    <Link
-                        to={'/' + name.toLowerCase().replace(/\s+/g, '_')} //regex for replacing %20 by _ in a pathname
-                        className='cats_item'>
-                            {name}
-                    </Link>
+                    getLinkOrCatName()
                 }
         </li>
         </>

@@ -28,6 +28,10 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, 
         }
     }, [promise])
 
+    useEffect(() => {
+        getCats()
+    }, [categories])
+
 
     return (
         <aside className='side-menu'>
@@ -70,7 +74,7 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, 
 
                 { categories &&
                 categories.map(({_id, name}) => {
-                    return <CCategory name={name} _id={_id} isEdit={isEdit}/>
+                    return <CCategory key={_id} name={name} _id={_id} isEdit={isEdit} removeCat={removeCat}/>
                 })
             }
           </ul>
