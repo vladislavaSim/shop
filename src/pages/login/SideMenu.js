@@ -11,6 +11,7 @@ import {CEditCategory} from "../../graphQL/admin/EditCategory";
 import {CCategory} from "../../graphQL/admin/Category";
 import {store} from "../../redux/store";
 import {clearPromiseByName} from "../../redux/actions/actionsPromise";
+import { ModalWindow } from '../../components/Modal';
 
 const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, getCatById, promise, getCats}) => {
     const [isEdit, setIsEdit] = useState(false)
@@ -69,6 +70,20 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, 
                             variant="contained">
                             Add category
                         </Button>
+                       
+                        {/* {newCatName && (
+                <ConfirmModal
+                    open={isDeleteModalOpen}
+                    text="Видалити товар?"
+                    onClose={() => setIsDeleteModalOpen(false)}
+                    onNO={() => setIsDeleteModalOpen(false)}
+                    onYES={() => {
+                        onDelete(good);
+                        // setPromiseTimeOut(setTimeout(() => formik.setSubmitting(false), 3000));
+                    }}
+                />
+            )} */}
+                    
                     </div>
                 }
 

@@ -7,12 +7,18 @@ import {actionAddGood} from "../redux/actions/actionsCart";
 import Carousel from 'react-material-ui-carousel'
 import {queryGoodDelete} from "../graphQL/admin/actionGood";
 import {ModalWindow} from "./Modal";
+import Confirm from './Confirm';
+import { useState } from 'react';
 
-const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
+const GoodInfoCard = ({good, login, deleteGood, addToCart, promise}) => {
     const {name, price, description, images, _id, categories} = good
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-    console.log(good)
-    console.log(_id + ' INFO CARD')
+    useEffect(() => {
+        if(promise?.goodDelete?.status === 'RESOLVED') {
+            window.location.reload()
+        }
+    }, [promise])
 
     return (
         <>
@@ -55,10 +61,23 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart}) => {
                         <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
                         { login === 'admin' &&
                         <>
-                            <Button size="small"
-                                    onClick={() => deleteGood({_id, name: name || null})}>
+                                               
+                {isDeleteModalOpen ? 
+                <Confirm
+                    open={isDeleteModalOpen}
+                    text="Delete the good?"
+                    onClose={() => setIsDeleteModalOpen(false)}
+                    onNO={() => setIsDeleteModalOpen(false)}
+                    onYES={() => deleteGood({_id, name: name || null})}
+                    
+                /> :
+                 <Button size="small"
+                         onClick={() => setIsDeleteModalOpen(true)}>
                                 DELETE
-                            </Button>
+                 </Button>
+            }
+            
+                           
                             <ModalWindow modalType='edit good' width={700} good={good}>
                                 <Button size="small">Edit</Button>
                             </ModalWindow>

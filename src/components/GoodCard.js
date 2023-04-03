@@ -5,13 +5,16 @@ import noImage from "../images/no-image-icon-23483.png"
 import {connect} from "react-redux";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import {ModalWindow} from "./Modal";
+import { useEffect } from 'react';
 
 const GoodCard = ({name, price, description, images, _id, categories, addToCart, good}) => {
-
+    useEffect(() => {
+        console.log(good);
+    }, [good])
     return (
         <>
             {_id &&
-            <Card sx={{width: '220px'}} className='card' className='good-card'>
+            <Card sx={{width: '220px'}} className='card good-card'>
                 {
                     <CardMedia
                     style={{margin: '0 auto', width: 'auto'}}
@@ -40,9 +43,11 @@ const GoodCard = ({name, price, description, images, _id, categories, addToCart,
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
-                    <ModalWindow modalType='good' width={700} good={good}>
+                    
+                        <ModalWindow modalType='good' width={700} good={good}>
                         <Button size="small">Learn More</Button>
                     </ModalWindow>
+                    
                 </CardActions>
             </Card>}
         </>

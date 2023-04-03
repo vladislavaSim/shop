@@ -10,6 +10,8 @@ import {CCartForm} from "../pages/cart/CartForm";
 import {CGoodInfoCard} from "./GoodInfoCard";
 import {CUserInfo} from "../pages/user/UserInfo";
 import {CNewGoodForm} from "./admin/NewGoodForm";
+import Confirm from './Confirm';
+
 
 const style = {
     position: 'absolute',
@@ -60,9 +62,10 @@ export const ModalWindow = ({modalType, children, width, good}) => {
                             {modalType === 'log in' && <CLoginForm handleClose={handleClose}/>}
                             {modalType === 'sign up' && <CRegistrationForm handleClose={handleClose}/>}
                             {modalType === 'cart' && <CCartForm handleClose={handleClose}/>}
-                            {modalType === 'good' && <CGoodInfoCard handleClose={handleClose} good={good}/>}
+                            {modalType === 'good' && good && <CGoodInfoCard handleClose={handleClose} good={good}/>}
                             {modalType === 'user' && <CUserInfo/>}
                             {modalType === 'edit good' && <CNewGoodForm good={good} isEditing={true}/>}
+                            {/* {modalType === 'confirm' && children} */}
                         </Box>
                     </div>
 
