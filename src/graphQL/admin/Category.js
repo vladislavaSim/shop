@@ -6,12 +6,14 @@ import {connect, useDispatch} from "react-redux";
 import {actionCatById, getGoodsByCat} from "../getCats";
 import {store} from "../../redux/store";
 import {clearPromiseByName} from "../../redux/actions/actionsPromise";
+import Confirm from '../../components/Confirm';
 
 const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise, removeCat}) => {
     const [isEditCatName, setIsEditCatName] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
 
     const dispatch = useDispatch()
-// console.log(isEdit);
 
     function editCatName(_id) {
         setIsEditCatName(true)
@@ -23,9 +25,12 @@ const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise, remove
             dispatch(clearPromiseByName('categoryUpsert'))
         }
     }, [promise])
+    useEffect(() => {
+        console.log(isDeleteModalOpen);
+    }, [isDeleteModalOpen])
 
     function getLinkOrCatName() {
-        if(isEdit) {
+        if(isEdit || isDeleteModalOpen) {
             return <div className='cats_item'>{name}</div>
         } else {
             return <Link
@@ -40,22 +45,38 @@ const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise, remove
             <li
             className='cats_item'
             key={_id}
-            onClick={() => dispatch(() => getGoodsByCat(name))}>
+            onClick={() => dispatch(() => !isEdit && getGoodsByCat(name))}>
             {isEdit && !isEditCatName &&
             <>
-                <Button
-                    size='small'
-                    color='success'
-                    variant="contained"
-                    onClick={() => editCatName(_id)}>rename
-                </Button>
-                <Button
-                   size='small'
-                   color='error'
-                   variant="contained"
-                   onClick={() => removeCat({_id, name})}>x
-                </Button>
+                
+            
 
+                         {  isDeleteModalOpen ? <Confirm
+                                open={isDeleteModalOpen}
+                                text={`Delete category "${name}"?`}
+                                onClose={() => setIsDeleteModalOpen(false)}
+                                onNO={() => setIsDeleteModalOpen(false)}
+                                onYES={() => removeCat({_id, name})}
+                            />
+                            : 
+                            <>
+                                <Button
+                                    size='small'
+                                    color='success'
+                                    variant="contained"
+                                    onClick={() => editCatName(_id)}>rename
+                                </Button>
+                                <Button
+                                size='small'
+                                color='error'
+                                variant="contained"
+                                onClick={() => setIsDeleteModalOpen(true)}>x
+                            </Button>
+                         </>
+                        }
+            
+
+               
             </>
             }
                 {
@@ -63,7 +84,7 @@ const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise, remove
                      ?
                     <CEditCategory isEditCatName={isEditCatName}/>
                     :
-                    getLinkOrCatName()
+                     getLinkOrCatName()
                 }
         </li>
         </>

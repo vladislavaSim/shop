@@ -26,13 +26,14 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
             return null
         }
     }
+    console.log(store.getState());
 //goods state update while choosing cats from sidemenu
     useEffect(() => {
        setGoods(goodsByCat)
+       console.log(goodsByCat);
     }, [goodsByCat])
 
     useEffect(() => {
-        console.log(location.pathname)
         dispatch(() => getGoodsByCat(location.pathname.slice(1, location.pathname.length)))
     }, [])
 
@@ -45,7 +46,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
         setGoods(goodsByName)
     }, [goodsByName])
 
-    console.log(store.getState())
+    // console.log(store.getState())
     return (
        <div style={{margin: '0 auto', width: '80%'}}>
            <div className='inputs-box'>

@@ -8,9 +8,9 @@ import {ModalWindow} from "./Modal";
 import { useEffect } from 'react';
 
 const GoodCard = ({name, price, description, images, _id, categories, addToCart, good}) => {
-    useEffect(() => {
-        console.log(good);
-    }, [good])
+    // useEffect(() => {
+    //     console.log(good);
+    // }, [good])
     return (
         <>
             {_id &&

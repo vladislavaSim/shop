@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect, useDispatch} from "react-redux";
-import {actionCatById, getCatsQuery, getGoodsByCat} from "../../graphQL/getCats";
+import {actionCatById, getCatsQuery} from "../../graphQL/getCats";
 import {queryAllGoods} from "../../graphQL/getGoodsQuery";
 import {Link} from "react-router-dom";
 import {actionCategoryUpsert, queryCatDelete} from "../../graphQL/admin/actionCategory";
@@ -13,7 +13,7 @@ import {store} from "../../redux/store";
 import {clearPromiseByName} from "../../redux/actions/actionsPromise";
 import { ModalWindow } from '../../components/Modal';
 
-const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, getCatById, promise, getCats}) => {
+const SideMenu = ({categories, login, addCat, removeCat, getAll, getCatById, promise, getCats}) => {
     const [isEdit, setIsEdit] = useState(false)
     const [newCatName, setNewCatName] = useState('')
 
@@ -26,6 +26,7 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, 
             dispatch(clearPromiseByName('categoryUpsert'))
             dispatch(() => getAll())
             dispatch(() => getCats())
+            setNewCatName('')
         }
     }, [promise])
 
@@ -70,19 +71,6 @@ const SideMenu = ({categories, login, addCat, getGoodsByCat, removeCat, getAll, 
                             variant="contained">
                             Add category
                         </Button>
-                       
-                        {/* {newCatName && (
-                <ConfirmModal
-                    open={isDeleteModalOpen}
-                    text="Видалити товар?"
-                    onClose={() => setIsDeleteModalOpen(false)}
-                    onNO={() => setIsDeleteModalOpen(false)}
-                    onYES={() => {
-                        onDelete(good);
-                        // setPromiseTimeOut(setTimeout(() => formik.setSubmitting(false), 3000));
-                    }}
-                />
-            )} */}
                     
                     </div>
                 }
@@ -104,7 +92,6 @@ export const CSideMenu = connect((state) => ({
     allGoods: state?.promise?.allGoods?.payload
 }), {
     getCats: getCatsQuery,
-    getGoodsByCat: getGoodsByCat,
     getAll: queryAllGoods,
     removeCat: queryCatDelete,
     addCat: actionCategoryUpsert,
