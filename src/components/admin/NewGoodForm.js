@@ -26,14 +26,15 @@ const NewGoodForm = ({onUploadFiles,
     const [price, setPrice] = useState(good?.price || '')
     const [categories, setCategories] = useState(good?.categories || [])
     const [images, setImages] = useState(good?.images || [])
+        const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    console.log(store.getState())
+    // console.log(store.getState())
 
     useEffect(() => {
-        console.log(11)
         getCats()
         return () => {
             navigate('/')
@@ -78,7 +79,6 @@ const NewGoodForm = ({onUploadFiles,
         if(good?._id) {
             obj._id = good._id
         }
-        console.log(description)
         return obj
     }
 
@@ -96,7 +96,7 @@ const NewGoodForm = ({onUploadFiles,
         setPrice('')
         setCategories(null)
     }
-    console.log(makeGoodObj())
+    // console.log(makeGoodObj())
     return (
         <div className='admin-form'>
             <div className='preview-box'>
@@ -158,13 +158,13 @@ const NewGoodForm = ({onUploadFiles,
                     </MenuItem>
                 ))}
             </TextField>
-            <Button
+            {<Button
                 disabled={!name || !price || !categories.name}
                 variant="contained"
                 color='success'
                 onClick={() => addNewGood(makeGoodObj())}>
                 {isEditing ? 'Save' : 'Add'}
-            </Button>
+            </Button> }
         </div>
     );
 };

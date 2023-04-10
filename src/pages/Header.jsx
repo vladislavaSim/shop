@@ -9,7 +9,9 @@ import {connect} from "react-redux";
 import PersonIcon from '@mui/icons-material/Person';
 import {actionLogout} from "../redux/actions/actionsAuth";
 import {Link} from "react-router-dom";
+import Confirm from '../components/Confirm';
 
+//styles for number badge on a cart icon
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
         right: -3,
@@ -19,8 +21,13 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
+const styles = {
+    backgroundColor: 'transparent',
+    scale: '.8'
+}
 const Header = ({login, doLogout, cart}) => {
     const [cartNumber, setCartNumber] = useState(0)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     useEffect(() => {
         if(cart !== {}) {
@@ -33,6 +40,39 @@ const Header = ({login, doLogout, cart}) => {
             }
         }
     }, [cart])
+
+    function showLogoutBtn() {
+        console.log(isDeleteModalOpen);
+        if(login && !isDeleteModalOpen) {
+            return <Button
+            variant="contained"
+            onClick={() => setIsDeleteModalOpen(true)}
+            color="success">
+            Log out
+            </Button>
+        }
+        else if(login && isDeleteModalOpen) {
+            return <Confirm open={isDeleteModalOpen}
+                styles={styles}
+                text={`Are you sure to log out?`}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onNO={() => setIsDeleteModalOpen(false)}
+                onYES={() => doLogout()}
+        />
+        }
+     else if(!login) {
+        return <div className='auth-buttons-box'>
+            <ModalWindow modalType={'log in'} width={400}/>
+            <ModalWindow modalType={'sign up'} width={400}/>
+    </div>
+    }
+}
+    // useEffect(() => {
+    //     setIsDeleteModalOpen(false)
+    // }, [login])
+
+    console.log(isDeleteModalOpen);
+    console.log(login);
     return (
         <header>
             <div className='header-box'>
@@ -53,19 +93,7 @@ const Header = ({login, doLogout, cart}) => {
                 </Button>
             }
             <div className='header-box'>
-                {!login
-                    ? <div className='auth-buttons-box'>
-                        <ModalWindow modalType={'log in'} width={400}/>
-                        <ModalWindow modalType={'sign up'} width={400}/>
-                    </div>
-                    :
-                    <Button
-                        variant="contained"
-                        onClick={() => doLogout()}
-                        color="success">
-                        Log out
-                    </Button>
-                }
+               {showLogoutBtn()}
                 <div>
                     <ModalWindow modalType='cart' width={700}>
                         <IconButton aria-label="cart" style={{color: 'yellow'}}>
