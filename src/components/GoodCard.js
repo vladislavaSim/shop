@@ -6,11 +6,10 @@ import {connect} from "react-redux";
 import {actionAddGood} from "../redux/actions/actionsCart";
 import {ModalWindow} from "./Modal";
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const GoodCard = ({name, price, description, images, _id, categories, addToCart, good}) => {
-    // useEffect(() => {
-    //     console.log(good);
-    // }, [good])
+
     return (
         <>
             {_id &&
@@ -44,9 +43,11 @@ const GoodCard = ({name, price, description, images, _id, categories, addToCart,
                 <CardActions>
                     <Button size="small" onClick={() => addToCart(good)}>Add to cart</Button>
                     
-                        <ModalWindow modalType='good' width={700} good={good}>
-                        <Button size="small">Learn More</Button>
-                    </ModalWindow>
+                        {/* <ModalWindow modalType='good' width={700} good={good}> */}
+                        <Link to={'/' +_id}>
+                            <Button size="small">Learn More</Button>
+                        </Link>
+                    {/* </ModalWindow> */}
                     
                 </CardActions>
             </Card>}

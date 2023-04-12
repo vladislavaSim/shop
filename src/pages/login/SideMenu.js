@@ -30,9 +30,10 @@ const SideMenu = ({categories, login, addCat, removeCat, getAll, getCatById, pro
         }
     }, [promise])
 
-    useEffect(() => {
-        getCats()
-    }, [categories])
+    //caused mass of unuseful extra requests
+    // useEffect(() => {
+    //     getCats()
+    // }, [categories])
 
 
     return (

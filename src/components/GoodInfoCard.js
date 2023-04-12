@@ -9,10 +9,13 @@ import {queryGoodDelete} from "../graphQL/admin/actionGood";
 import {ModalWindow} from "./Modal";
 import Confirm from './Confirm';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const GoodInfoCard = ({good, login, deleteGood, addToCart, promise}) => {
     const {name, price, description, images, _id, categories} = good
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if(promise?.goodDelete?.status === 'RESOLVED') {
@@ -22,6 +25,7 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart, promise}) => {
 
     return (
         <>
+        <Button onClick={() => navigate(-1)}>back</Button>
             {_id && <div style={{width: '100%'}} className='card'>
                 {images?.length === 1 ?
                     <CardMedia

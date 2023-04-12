@@ -4,9 +4,10 @@ import {CSideMenu} from "./login/SideMenu";
 import {Route, Routes} from "react-router";
 import {CNewGoodForm} from "../components/admin/NewGoodForm";
 import {connect} from "react-redux";
+import { CGoodInfoCard } from '../components/GoodInfoCard';
+import { store } from '../redux/store';
 
-const Main = ({categories}) => {
-
+const Main = ({categories, goodsByCat}) => {
     return (
         <>
             <main>
@@ -20,6 +21,15 @@ const Main = ({categories}) => {
                               key={key}
                               element={<CAllGoods/>}/>
                       })}
+                      {
+                        goodsByCat &&
+                        goodsByCat.map((good, key) => {
+                                return <Route
+                                    path={'/' + good?._id}
+                                    key={key}
+                                    element={<CGoodInfoCard good={good}/>}/>
+                            })
+                      }
                       <Route path='/createNewGood' element={<CNewGoodForm/>}/>
                       <Route path='/' element={<CAllGoods/>}/>
                   </Routes>
@@ -31,4 +41,5 @@ const Main = ({categories}) => {
 
 export const CMain = connect((state) => ({
     categories: state?.promise?.allCats?.payload,
+    goodsByCat: state?.promise?.goodsByCat?.payload?.goods
 }))(Main);

@@ -30,12 +30,13 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
 //goods state update while choosing cats from sidemenu
     useEffect(() => {
        setGoods(goodsByCat)
-       console.log(goodsByCat);
     }, [goodsByCat])
 
-    useEffect(() => {
-        dispatch(() => getGoodsByCat(location.pathname.slice(1, location.pathname.length)))
-    }, [])
+
+    // useEffect(() => {
+    //     console.log('reload []');
+    //     dispatch(() => getGoodsByCat(location.pathname.slice(1, location.pathname.length)))
+    // }, [])
 
 //initial all goods show
     useEffect(() => {
@@ -75,7 +76,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
                        variant="outlined">Reset</Button>
            </div>
            <div>
-               {goods && <Goods goods={goods}/>}
+               {goodsByCat && <Goods goods={goodsByCat}/>}
                <ScrollUpButton ContainerClassName="MyOverRideClass" />
            </div>
        </div>
