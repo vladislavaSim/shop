@@ -25,9 +25,9 @@ const Category = ({isEdit, _id, name, getGoodsByCat, getCatById, promise, remove
             dispatch(clearPromiseByName('categoryUpsert'))
         }
     }, [promise])
-    useEffect(() => {
-        console.log(isDeleteModalOpen);
-    }, [isDeleteModalOpen])
+    // useEffect(() => {
+    //     console.log(isDeleteModalOpen);
+    // }, [isDeleteModalOpen])
 
     function getLinkOrCatName() {
         if(isEdit || isDeleteModalOpen) {

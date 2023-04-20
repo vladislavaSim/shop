@@ -1,13 +1,21 @@
 import React, {useEffect} from 'react';
 import {CAllGoods} from "./AllGoods";
 import {CSideMenu} from "./login/SideMenu";
-import {Route, Routes} from "react-router";
+import {Route, Routes, useLocation} from "react-router";
 import {CNewGoodForm} from "../components/admin/NewGoodForm";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import { CGoodInfoCard } from '../components/GoodInfoCard';
 import { store } from '../redux/store';
+import { getGoodsByCat } from '../graphQL/getCats';
 
-const Main = ({categories, goodsByCat}) => {
+const Main = ({categories, goodsByCat, getGoodsByCat}) => {
+
+    const dispatch = useDispatch()
+    const location = useLocation()
+console.log(1);
+    useEffect(() => {
+        dispatch(() => getGoodsByCat(location.pathname.slice(1, location.pathname.length)))
+    }, [])
     return (
         <>
             <main>
@@ -42,4 +50,6 @@ const Main = ({categories, goodsByCat}) => {
 export const CMain = connect((state) => ({
     categories: state?.promise?.allCats?.payload,
     goodsByCat: state?.promise?.goodsByCat?.payload?.goods
-}))(Main);
+}), {
+    getGoodsByCat: getGoodsByCat
+})(Main);

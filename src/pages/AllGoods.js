@@ -15,7 +15,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
     const [sortedBy, setSortedBy] = useState('old')
 
     const dispatch = useDispatch()
-    const location = useLocation()
+ 
 
     function sortGoods(value) {
         setSortedBy(value)
@@ -27,16 +27,22 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
             return null
         }
     }
-
+console.log(store.getState());
 //goods state update while choosing cats from sidemenu
     useEffect(() => {
        setGoods(goodsByCat)
     }, [goodsByCat])
 
 useEffect(() => {
-    console.log(goodsByCat)
+    
     console.log('built');
 }, [])
+console.log(goodsByCat)
+useEffect(() => {
+        console.log('reload []');
+        console.log(goodsByCat);
+    }, [])
+
 //initial all goods show
     useEffect(() => {
         if(allGoods){
@@ -80,7 +86,7 @@ useEffect(() => {
                </Link>
            </div>
            <div>
-               {goods && <Goods goods={goods || goodsByCat}/>}
+               {goods && <Goods goods={goodsByCat}/>}
                <ScrollUpButton ContainerClassName="MyOverRideClass" />
            </div>
        </div>

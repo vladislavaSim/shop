@@ -5,7 +5,7 @@ const Goods = ({goods}) => {
     return (
         <div className='card-holder'>
             {
-                goods.map((good) => {
+                goods && goods.map((good) => {
                     return <CGoodCard
                                 good={good}
                                 categories={[good.categories?.[0]]}
