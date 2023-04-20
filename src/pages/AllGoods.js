@@ -33,7 +33,10 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
        setGoods(goodsByCat)
     }, [goodsByCat])
 
-
+useEffect(() => {
+    console.log(goodsByCat)
+    console.log('built');
+}, [])
 //initial all goods show
     useEffect(() => {
         if(allGoods){
@@ -77,7 +80,7 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
                </Link>
            </div>
            <div>
-               {goods && <Goods goods={goods}/>}
+               {goods && <Goods goods={goods || goodsByCat}/>}
                <ScrollUpButton ContainerClassName="MyOverRideClass" />
            </div>
        </div>

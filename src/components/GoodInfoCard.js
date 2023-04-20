@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {connect, useDispatch} from "react-redux";
+import {connect} from "react-redux";
 import {Button, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {backendUrl} from "../graphQL/url";
 import noImage from "../images/no-image-icon-23483.png";
@@ -10,8 +10,9 @@ import {ModalWindow} from "./Modal";
 import Confirm from './Confirm';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { CGoodCard } from './GoodCard';
 
-const GoodInfoCard = ({good, login, deleteGood, addToCart, promise}) => {
+const GoodInfoCard = ({good, login, deleteGood, addToCart, promise, otherGoods}) => {
     const {name, price, description, images, _id, categories} = good
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -23,6 +24,8 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart, promise}) => {
         }
     }, [promise])
 
+    // console.log(store.getState());
+    console.log(categories);
     return (
         <>
         <Button onClick={() => navigate(-1)}>back</Button>
@@ -92,14 +95,29 @@ const GoodInfoCard = ({good, login, deleteGood, addToCart, promise}) => {
                         {description}
                     </Typography>}
                 </CardContent>
-            </div>}
+            </div>
+            }
+            <div className='recommended-goods'>
+                 {otherGoods && otherGoods.slice(0, 4).map((good) => {
+                    return <CGoodCard
+                                good={good}
+                                categories={[good.categories?.[0]]}
+                                key={good._id}
+                                name={good.name}
+                                images={good.images}
+                                price={good.price}
+                                _id={good._id}
+                                createdAt={good.createdAt}/>
+                 })}
+            </div>
         </>
     );
 };
 
 export const CGoodInfoCard = connect((state) => ({
         promise: state?.promise,
-        login: state?.auth?.payload?.sub?.login
+        login: state?.auth?.payload?.sub?.login,
+        otherGoods: state?.promise?.goodsByCat?.payload?.goods,
     }),
     {
         addToCart: actionAddGood,
