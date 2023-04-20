@@ -42,7 +42,7 @@ const Header = ({login, doLogout, cart}) => {
     }, [cart])
 
     function showLogoutBtn() {
-        console.log(isDeleteModalOpen);
+        // console.log(isDeleteModalOpen);
         if(login && !isDeleteModalOpen) {
             return <Button
             variant="contained"
@@ -71,8 +71,8 @@ const Header = ({login, doLogout, cart}) => {
     //     setIsDeleteModalOpen(false)
     // }, [login])
 
-    console.log(isDeleteModalOpen);
-    console.log(login);
+    // console.log(isDeleteModalOpen);
+    // console.log(login);
     return (
         <header>
             <div className='header-box'>

@@ -7,6 +7,7 @@ import Goods from "./Goods";
 import {store} from "../redux/store";
 import {getGoodsByCat} from "../graphQL/getCats";
 import {useLocation} from "react-router";
+import { Link } from 'react-router-dom';
 
 
 const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
@@ -26,21 +27,18 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
             return null
         }
     }
-    console.log(store.getState());
+
 //goods state update while choosing cats from sidemenu
     useEffect(() => {
        setGoods(goodsByCat)
     }, [goodsByCat])
 
 
-    // useEffect(() => {
-    //     console.log('reload []');
-    //     dispatch(() => getGoodsByCat(location.pathname.slice(1, location.pathname.length)))
-    // }, [])
-
 //initial all goods show
     useEffect(() => {
-        setGoods(allGoods)
+        if(allGoods){
+            setGoods(allGoods)
+        }
     }, [allGoods])
 
     useEffect(() => {
@@ -70,13 +68,16 @@ const AllGoods = ({getAll, allGoods, goodsByCat, goodsByName}) => {
                </FormControl>
                <CSearch/>
 
-               <Button onClick={() => setGoods(allGoods)}
-                       color="error"
-                       size="small"
-                       variant="outlined">Reset</Button>
+               <Link to='/'>
+                <Button onClick={() => setGoods(allGoods)}
+                        color="error"
+                        size="small"
+                        variant="outlined">Reset
+                 </Button>
+               </Link>
            </div>
            <div>
-               {goodsByCat && <Goods goods={goodsByCat}/>}
+               {goods && <Goods goods={goods}/>}
                <ScrollUpButton ContainerClassName="MyOverRideClass" />
            </div>
        </div>

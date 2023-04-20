@@ -52,7 +52,7 @@ const SideMenu = ({categories, login, addCat, removeCat, getAll, getCatById, pro
                     style={{fontWeight: "600"}}
                     className='cats_item'
                     onClick={() => dispatch(() => getAll())}>
-                       • All
+                       <Link to='/'>• All</Link>
                 </li>
                 {
                     isEdit &&
